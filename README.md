@@ -1,4 +1,4 @@
-<p align="center"><img src="https://img1.imgtp.com/2023/08/12/s9yRR4Vf.jpg" width="400" alt="小程序"></p>
+<p align="center"><img src="https://img1.imgtp.com/2023/08/12/s9yRR4Vf.jpg" width="300" alt="小程序"></p>
 <p align="center">扫码访问小程序</p>
 
 ## 关于图视界
