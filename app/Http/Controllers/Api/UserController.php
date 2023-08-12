@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Users;
+use App\Models\WechatApp;
 
 class UserController extends Controller
 {
@@ -18,8 +19,10 @@ class UserController extends Controller
         $code = $request->input('code');
         $userinfo = $request->input('userinfo');
 
-        $appid = 'wx5dd4cd74a0060097';
-        $secret = 'ab233091b559fe1dc522308020fdfa83';
+        // 获得小程序的appid和secret设置
+        $wechatapp = WechatApp::first();
+        $appid = $wechatapp->AppId;
+        $secret = $wechatapp->AppSecret;
 
         $client = new \GuzzleHttp\Client(); // curl模拟http进行get和post请求的类
 
