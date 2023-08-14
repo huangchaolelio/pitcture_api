@@ -56,9 +56,14 @@
                     <input type="text" class="form-control" id="local_bucket" name="local_bucket" value="" placeholder="输入存储目录名称" />
                   </div>
                   <div class="mb-3 col-md-12">
-                  <label for="domain" class="form-label">*绑定域名</label>
-                  <input type="text" class="form-control" id="local_domain" name="local_domain" value="" placeholder="输入域名" />
-                </div>
+                    <label for="domain" class="form-label">*绑定域名</label>
+                    <input type="text" class="form-control" id="local_domain" name="local_domain" value="" placeholder="输入域名" />
+                    <small class="form-text">例如：http://yourdomain.com/</code></small>
+                  </div>
+                  <div class="mb-3 col-md-12">
+                    <label for="tag" class="form-label">*Tag</label>
+                    <input type="number" class="form-control" id="local_tag" name="local_tag" value="" placeholder="输入大于0的数字"/ step="1"  min="0" onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''">
+                  </div>
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="local_status">
                     <label class="form-check-label" for="flexCheckDefault">启用</label>
@@ -67,7 +72,7 @@
                     <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">添 加</button>
                     <button type="reset" class="btn btn-default">重 置</button>
                   </div>
-                  </form>          
+                </form>          
               </div>
             
               <div class="tab-pane fade" id="qiniu" aria-labelledby="basic-qiniu">
@@ -81,6 +86,7 @@
                 <div class="mb-3 col-md-12">
                   <label for="domain" class="form-label">*绑定域名</label>
                   <input type="text" class="form-control" id="qiniu_domain" name="qiniu_domain" value="" placeholder="输入域名" />
+                  <small class="form-text">例如：http://yourdomain.com/</code></small>
                 </div>
                 <div class="mb-3 col-md-12">
                   <label for="accesskey" class="form-label">*AccessKey(AK)</label>
@@ -89,6 +95,10 @@
                 <div class="mb-3 col-md-12">
                   <label for="secretkey" class="form-label">*SecretKey(SK)</label>
                   <input type="text" class="form-control" id="qiniu_secretkey" name="qiniu_secretkey" value="" placeholder="输入SecretKey(SK)" />
+                </div>
+                <div class="mb-3 col-md-12">
+                  <label for="tag" class="form-label">*Tag</label>
+                  <input type="number" class="form-control" id="qiniu_tag" name="qiniu_tag" value="" placeholder="输入大于0的数字"/ step="1"  min="0" onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''">
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="1" name="qiniu_status">
@@ -112,6 +122,7 @@
                 <div class="mb-3 col-md-12">
                   <label for="domain" class="form-label">*绑定域名</label>
                   <input type="text" class="form-control" id="alioss_domain" name="alioss_domain" value="" placeholder="输入域名" />
+                  <small class="form-text">例如：http://yourdomain.com/</code></small>
                 </div>
                 <div class="mb-3 col-md-12">
                   <label for="accesskey" class="form-label">*AccessKey(AK)</label>
@@ -120,6 +131,10 @@
                 <div class="mb-3 col-md-12">
                   <label for="secretkey" class="form-label">*SecretKey(SK)</label>
                   <input type="text" class="form-control" id="alioss_secretkey" name="alioss_secretkey" value="" placeholder="输入SecretKey(SK)" />
+                </div>
+                <div class="mb-3 col-md-12">
+                  <label for="tag" class="form-label">*Tag</label>
+                  <input type="number" class="form-control" id="alioss_tag" name="alioss_tag" value="" placeholder="输入大于0的数字"/ step="1"  min="0" onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''">
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="1" name="alioss_status">
@@ -147,6 +162,7 @@
                 <div class="mb-3 col-md-12">
                   <label for="domain" class="form-label">*绑定域名</label>
                   <input type="text" class="form-control" id="tencentcos_domain" name="tencentcos_domain" value="" placeholder="输入域名" />
+                  <small class="form-text">例如：http://yourdomain.com/</code></small>
                 </div>
                 <div class="mb-3 col-md-12">
                   <label for="accesskey" class="form-label">*AccessKey(AK)</label>
@@ -155,6 +171,10 @@
                 <div class="mb-3 col-md-12">
                   <label for="secretkey" class="form-label">*SecretKey(SK)</label>
                   <input type="text" class="form-control" id="tencentcos_secretkey" name="tencentcos_secretkey" value="" placeholder="输入SecretKey(SK)" />
+                </div>
+                <div class="mb-3 col-md-12">
+                  <label for="tag" class="form-label">*Tag</label>
+                  <input type="number" class="form-control" id="tencentcos_tag" name="tencentcos_tag" value="" placeholder="输入大于0的数字"/ step="1"  min="0" onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''">
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="1" name="tencentcos_status">
@@ -191,6 +211,7 @@
   $('.localhost').on('submit', function(event) {
     var $bucket = $('#local_bucket').val();
     var $domain = $('#local_domain').val();
+    var $tag = $('#local_tag').val();
     if($.trim($bucket) == '') {
       $.alert({
         title: '提示',
@@ -207,18 +228,35 @@
         content: '绑定域名不能为空',
       });
       return false;
+    } else if($.trim($tag) == '') {
+      $.alert({
+        title: '提示',
+        icon: 'mdi mdi-alert',
+        type: 'orange',
+        content: 'Tag不能为空',
+      });
+      return false;
     } else {
       var $data  = $(this).serialize();
       $.post($(this).attr('action'), $data, function(res) {
-        if(res.code) {        
+        if(res.code == 0) {        
           $.alert({
             title: '提示',
             icon: 'mdi mdi-alert',
             type: 'orange',
             content: res.msg,
           });
-        }
-        window.location.href = "{{url('admin/oss_list')}}";     
+          return false; 
+        } 
+        if(res.code == 1) {        
+          $.alert({
+            title: '提示',
+            icon: 'mdi mdi-alert',
+            type: 'orange',
+            content: res.msg,
+          });
+          window.location.href = "{{url('admin/oss_list')}}";   
+        }          
       });
       return false;
     } 
@@ -230,6 +268,7 @@
     var $domain = $('#qiniu_domain').val();
     var $accesskey = $('#qiniu_accesskey').val();
     var $secretkey = $('#qiniu_secretkey').val();
+    var $tag = $('#qiniu_tag').val();
     if($.trim($bucket) == '') {
       $.alert({
         title: '提示',
@@ -262,18 +301,35 @@
         content: 'secretkey不能为空',
       });
       return false;
+    } else if($.trim($tag) == '') {
+      $.alert({
+        title: '提示',
+        icon: 'mdi mdi-alert',
+        type: 'orange',
+        content: 'Tag不能为空',
+      });
+      return false;
     } else {
       var $data  = $(this).serialize();
       $.post($(this).attr('action'), $data, function(res) {
-        if(res.code) {
+        if(res.code == 0) {        
           $.alert({
             title: '提示',
             icon: 'mdi mdi-alert',
             type: 'orange',
             content: res.msg,
           });
-        }
-        window.location.href = "{{url('admin/oss_list')}}";      
+          return false; 
+        } 
+        if(res.code == 1) {
+          $.alert({
+            title: '提示',
+            icon: 'mdi mdi-alert',
+            type: 'orange',
+            content: res.msg,
+          });
+          window.location.href = "{{url('admin/oss_list')}}";   
+        }           
       });
       return false;      
     }
@@ -285,6 +341,7 @@
     var $domain = $('#alioss_domain').val();
     var $accesskey = $('#alioss_accesskey').val();
     var $secretkey = $('#alioss_secretkey').val();
+    var $tag = $('#alioss_tag').val();
     if($.trim($bucket) == '') {
       $.alert({
         title: '提示',
@@ -317,10 +374,27 @@
         content: 'secretkey不能为空',
       });
       return false;
+    } else if($.trim($tag) == '') {
+      $.alert({
+        title: '提示',
+        icon: 'mdi mdi-alert',
+        type: 'orange',
+        content: 'Tag不能为空',
+      });
+      return false;
     } else {
       var $data  = $(this).serialize();
       $.post($(this).attr('action'), $data, function(res) {
-        if(res.code) {
+        if(res.code == 0) {        
+          $.alert({
+            title: '提示',
+            icon: 'mdi mdi-alert',
+            type: 'orange',
+            content: res.msg,
+          });
+          return false; 
+        } 
+        if(res.code == 1) {
           $.alert({
             title: '提示',
             icon: 'mdi mdi-alert',
@@ -341,6 +415,7 @@
     var $domain = $('#tencentcos_domain').val();
     var $accesskey = $('#tencentcos_accesskey').val();
     var $secretkey = $('#tencentcos_secretkey').val();
+    var $tag = $('#tencentcos_tag').val();
     if($.trim($bucket) == '') {
       $.alert({
         title: '提示',
@@ -381,18 +456,35 @@
         content: 'secretkey不能为空',
       });
       return false;
+    } else if($.trim($tag) == '') {
+      $.alert({
+        title: '提示',
+        icon: 'mdi mdi-alert',
+        type: 'orange',
+        content: 'Tag不能为空',
+      });
+      return false;
     } else {
       var $data  = $(this).serialize();
       $.post($(this).attr('action'), $data, function(res) {
-        if(res.code) {
+        if(res.code == 0) {        
           $.alert({
             title: '提示',
             icon: 'mdi mdi-alert',
             type: 'orange',
             content: res.msg,
           });
-        }
-        window.location.href = "{{url('admin/oss_list')}}";      
+          return false; 
+        } 
+        if(res.code == 1) {
+          $.alert({
+            title: '提示',
+            icon: 'mdi mdi-alert',
+            type: 'orange',
+            content: res.msg,
+          });
+        window.location.href = "{{url('admin/oss_list')}}";  
+        }    
       });
       return false;      
     }

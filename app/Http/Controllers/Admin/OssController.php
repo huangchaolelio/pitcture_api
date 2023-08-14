@@ -39,6 +39,14 @@ class OssController extends Controller
             $local->mark = $mark;
             $local->bucket = $request->local_bucket;
             $local->domain = $request->local_domain;
+            $local->tag = $request->local_tag;
+
+            // 判断tag是否有相同的值
+            $oss = OssConfig::where('tag', $request->local_tag)->first();
+            if(!empty($oss))
+            {
+                return ['code' => 0, 'msg' => 'Tag数值已经在使用，请更换其它数字'];
+            }
                 
             if($request->local_status == 1)
             {
@@ -64,6 +72,14 @@ class OssController extends Controller
             $qiniu->domain = $request->qiniu_domain;
             $qiniu->accesskey = $request->qiniu_accesskey;
             $qiniu->secretkey = $request->qiniu_secretkey;
+            $qiniu->tag = $request->qiniu_tag;
+
+            // 判断tag是否有相同的值
+            $oss = OssConfig::where('tag', $request->qiniu_tag)->first();
+            if(!empty($oss))
+            {
+                return ['code' => 0, 'msg' => 'Tag数值已经在使用，请更换其它数字'];
+            }
                 
             if($request->qiniu_status == 1)
             {
@@ -89,6 +105,14 @@ class OssController extends Controller
             $alioss->domain = $request->alioss_domain;
             $alioss->accesskey = $request->alioss_accesskey;
             $alioss->secretkey = $request->alioss_secretkey;
+            $alioss->tag = $request->alioss_tag;
+
+            // 判断tag是否有相同的值
+            $oss = OssConfig::where('tag', $request->alioss_tag)->first();
+            if(!empty($oss))
+            {
+                return ['code' => 0, 'msg' => 'Tag数值已经在使用，请更换其它数字'];
+            }
                 
             if($request->alioss_status == 1)
             {
@@ -115,6 +139,14 @@ class OssController extends Controller
             $tencentcos->domain = $request->tencentcos_domain;
             $tencentcos->accesskey = $request->tencentcos_accesskey;
             $tencentcos->secretkey = $request->tencentcos_secretkey;
+            $tencentcos->tag = $request->tencentcos_tag;
+
+            // 判断tag是否有相同的值
+            $oss = OssConfig::where('tag', $request->tencentcos_tag)->first();
+            if(!empty($oss))
+            {
+                return ['code' => 0, 'msg' => 'Tag数值已经在使用，请更换其它数字'];
+            }
                 
             if($request->tencentcos_status == 1)
             {

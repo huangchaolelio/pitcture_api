@@ -50,6 +50,7 @@
                 <div class="mb-3 col-md-12">
                   <label for="domain" class="form-label">*绑定域名</label>
                   <input type="text" class="form-control" id="qiniu_domain" name="qiniu_domain" value="{{$oss->domain}}" placeholder="输入域名" />
+                  <small class="form-text">例如：http://yourdomain.com/</code></small>
                 </div>
                 <div class="mb-3 col-md-12">
                   <label for="accesskey" class="form-label">*AccessKey(AK)</label>
@@ -58,6 +59,10 @@
                 <div class="mb-3 col-md-12">
                   <label for="secretkey" class="form-label">*SecretKey(SK)</label>
                   <input type="text" class="form-control" id="qiniu_secretkey" name="qiniu_secretkey" value="{{$oss->secretkey}}" placeholder="输入SecretKey(SK)" />
+                </div>
+                <div class="mb-3 col-md-12">
+                  <label for="tag" class="form-label">*Tag</label>
+                  <input type="text" class="form-control" id="qiniu_tag" name="qiniu_tag" value="{{$oss->tag}}" placeholder="输入tag" disabled/>
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="1" name="qiniu_status"

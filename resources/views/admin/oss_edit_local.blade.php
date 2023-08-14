@@ -48,9 +48,14 @@
                     <input type="text" class="form-control" id="local_bucket" name="local_bucket" value="{{$oss->bucket}}" placeholder="输入存储目录名称" />
                   </div>
                   <div class="mb-3 col-md-12">
-                  <label for="domain" class="form-label">*绑定域名</label>
-                  <input type="text" class="form-control" id="local_domain" name="local_domain" value="{{$oss->domain}}" placeholder="输入域名" />
-                </div>
+                    <label for="domain" class="form-label">*绑定域名</label>
+                    <input type="text" class="form-control" id="local_domain" name="local_domain" value="{{$oss->domain}}" placeholder="输入域名" />
+                    <small class="form-text">例如：http://yourdomain.com/</code></small>
+                  </div>
+                  <div class="mb-3 col-md-12">
+                    <label for="tag" class="form-label">*Tag</label>
+                    <input type="text" class="form-control" id="local_tag" name="local_tag" value="{{$oss->tag}}" placeholder="输入tag" disabled/>
+                  </div>
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="1" name="local_status"
                     @if($oss->status == 1)
