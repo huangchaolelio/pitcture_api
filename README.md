@@ -3,6 +3,16 @@
 
 ## 关于图视界
 
-图视界是一款基于微信小程序，开发的图片内应用程序，可以做图片展示和手机壁纸站等。
+图视界是一款基于微信小程序开发的图片应用程序，适合做图片展示和手机壁纸站等。
 
 更多功能在进一步完善中，请随时关注更新情况。。。
+
+## 后台展示
+
+<p align="center"><img src="https://img1.imgtp.com/2023/08/14/qxfb0jGK.png" alt="管理后台"></p>
+
+<p align="center"><img src="https://img1.imgtp.com/2023/08/14/um6GINEC.png" alt="管理后台"></p>
+
+<p align="center"><img src="https://img1.imgtp.com/2023/08/14/EY5tA52P.png" alt="管理后台"></p>
+
+<p align="center"><img src="https://img1.imgtp.com/2023/08/14/hdbavZS0.png" alt="管理后台"></p>
