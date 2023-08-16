@@ -38,8 +38,34 @@ class PictureItemController extends Controller
 
         $item_url = PictureItem::find($pic_item_id)->url;
 
-        // // 下载图片的地址
-        return $item_url;
+        // 返回图片下载的地址
+        // return $item_url;
+
+        /**
+        * 由于小程序下载必须是https地址，七牛云https收费，使用了http不能直接下载，
+        * 因此先把图片下载到服务器上再在小程中下载。功能图下。
+        */
+        // $file = '1.jpg';
+        // $client = new \GuzzleHttp\Client(['verify' => false]);  //忽略SSL错误
+        // $response = $client->get('https://www.yedushu.com/uploads/yds2/yds1691939621m.jpg', ['save_to' => $file]);  //保存远程url到文件
+
+        // 新建下载文件用的临时目录
+        $path = 'downloads_tmp';
+        //判断保存目录是否存在，如果不存在则建立目录
+        if(!file_exists($path)){
+            mkdir($path, 0777, true);
+        }
+
+        // 获取url字符串截取路径文件名
+        preg_match('/\/([^\/]+\.[a-z]+)[^\/]*$/', $item_url, $match); 
+        $fileName = $match[1];
+
+        $url = $item_url; // 远程图片的URL地址
+        $image = file_get_contents($url); // 通过URL获取图片内容
+        $filePath = $path . '/' . mt_rand(1, 500) . $fileName; // 保存图片的本地路径
+        file_put_contents($filePath, $image); // 将图片内容保存为本地文件
+        // 返回图片下载地址
+        return 'https://picture-api.mdoo.cn/' . $filePath;
     }
 
     // 图片列表

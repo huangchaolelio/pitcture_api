@@ -13,15 +13,13 @@ Route::get('picture_category_list', [App\Http\Controllers\Api\PictureCategoryCon
 // 用户注册
 Route::post('user/login', [App\Http\Controllers\Api\UserController::class, 'userlogin']);
 
-
-
 // 前端用户发布图片
 Route::post('author/publish_pictures', [App\Http\Controllers\Api\PublishPicController::class, 'publish_pictures']);
 
 // 前端用户发布图片<tn-image-upload>组件用到的上传路由
 Route::post('picture/upload', [App\Http\Controllers\Api\PublishPicController::class, 'picture_upload']);
 
-// 获得分类的图辑列表
+// 获得分类的图辑列表，@param: picture_category_id
 Route::get('picture_list', [App\Http\Controllers\Api\PictureController::class, 'picture_list']);
 
 // 获得图辑列表
@@ -48,7 +46,7 @@ Route::get('open/author/info', [App\Http\Controllers\Api\UserController::class, 
 // 图片列表
 Route::get('item/list', [App\Http\Controllers\Api\PictureItemController::class, 'itemlist']);
 
-// 获取会员信息
+// 获取会员信息,参数：user_id
 Route::get('user/info', [App\Http\Controllers\Api\UserController::class, 'userInfo']);
 
 // 获得分享的标题内容

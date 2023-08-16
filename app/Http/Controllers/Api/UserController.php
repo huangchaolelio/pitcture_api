@@ -17,7 +17,6 @@ class UserController extends Controller
 
         // 获取授权临时票据（code）
         $code = $request->input('code');
-        $userinfo = $request->input('userinfo');
 
         // 获得小程序的appid和secret设置
         $wechatapp = WechatApp::first();
@@ -39,8 +38,6 @@ class UserController extends Controller
 
         $token = $session_key; // 用于前端判断是否会员登录状态
 
-        $userinfo = json_encode($userinfo);
-        $userinfo = json_decode($userinfo);
         // 查看变量类型
         // return gettype($userinfo);
 
@@ -55,12 +52,12 @@ class UserController extends Controller
             ];
 
         } else {
-            // 如果用户是第一次注册，保存用户信息
+            // 如果用户是第一次登录，保存用户信息到数据库
             $user = new Users();
             $user->openid = $openid; // 微信用户身份证明id
-            $user->nickname = $userinfo->nickName;
-            $user->gender = $userinfo->gender;
-            $user->avatar_url = $userinfo->avatarUrl;
+            $user->nickname = '昵称' . mb_substr($openid, 5);
+            $user->gender = 2; //用户性别：0-男，1-女，2-保密
+            $user->avatar_url = 'https://' . $_SERVER['Http_HOST'] . '/images/avatarUrl.jpg'; // 默认头像路径
             $user->created_time = time();
             $user->updated_time = time();
             $user->save();

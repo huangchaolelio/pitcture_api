@@ -93,7 +93,7 @@
                   <td>{{$user->id}}</td>
                   <td>{{$user->nickname}}</td>
                   <td>{{$user->name}}</td>
-                  <td>{{$user->openid}}></td>
+                  <td>{{$user->openid}}</td>
                   <td>{{$user->mobile}}</td>
                   <td>{{$user->email}}</td>
                   <td>{{$user->gender}}</td>
