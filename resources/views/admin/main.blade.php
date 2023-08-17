@@ -42,7 +42,7 @@
   	        <span class="avatar-md rounded-circle bg-white bg-opacity-25 avatar-box">
               <i class="mdi mdi-account fs-4"></i>
             </span>
-  	        <span class="fs-4">920,000</span>
+  	        <span class="fs-4">{{$userCount}}</span>
   	      </div>
   	      <div class="text-end">用户总数</div>
   	    </div>
@@ -56,7 +56,7 @@
   	        <span class="avatar-md rounded-circle bg-white bg-opacity-25 avatar-box">
               <i class="mdi mdi-arrow-down-bold fs-4"></i>
             </span>
-  	        <span class="fs-4">34,005,000</span>
+  	        <span class="fs-4">{{$downloads}}</span>
   	      </div>
   	      <div class="text-end">下载总量</div>
   	    </div>
@@ -68,11 +68,11 @@
   	    <div class="card-body">
   	      <div class="d-flex justify-content-between">
   	        <span class="avatar-md rounded-circle bg-white bg-opacity-25 avatar-box">
-              <i class="mdi mdi-comment-outline fs-4"></i>
+              <i class="mdi mdi-file-multiple fs-4"></i>
             </span>
-  	        <span class="fs-4">153 条</span>
+  	        <span class="fs-4">{{$pictureItemsCount}}</span>
   	      </div>
-  	      <div class="text-end">新增留言</div>
+  	      <div class="text-end">图片数量</div>
   	    </div>
   	  </div>
   	</div>

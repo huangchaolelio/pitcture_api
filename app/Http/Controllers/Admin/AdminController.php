@@ -30,7 +30,9 @@ class AdminController extends Controller
     public function postLogin(Request $request)
     {
         $username = $request->username;
-        $password = $request->password;        
+        $password = $request->password;
+        // 获得输入的验证码
+        $captcha_code = $request->captcha_code; 
 
         $adminuser = AdminUsers::where('username', $username)->first();
 
@@ -40,15 +42,20 @@ class AdminController extends Controller
         }
 
         // 验证密码是否正确
-        if (Hash::check($password, $adminuser->password))
+        if (!Hash::check($password, $adminuser->password))
         {
+            return ['code' => 0, 'msg' => '密码错误'];
+        }
+
+        // 判断验证码是否正确
+        if(!captcha_check($captcha_code)){
+           return ['code' => 0, 'msg' => '验证码错误'];;
+        } else {
             // 登录成功
             Session::put('username', $username);
             // 跳转到后台首页
             // return redirect('admin/index');
             return ['code' => 1, 'msg' => '登录成功'];
-        } else {
-            return ['code' => 0, 'msg' => '密码错误'];
         }
     }
 
@@ -61,7 +68,19 @@ class AdminController extends Controller
     // 后台首页
     public function main()
     {
-        return view('admin.main');
+        $users = Users::get();
+        $userCount = count($users);
+
+        $downloads = Picture::get()->sum('download');
+
+        $pictureItems = PictureItem::get();
+        $pictureItemsCount = count($pictureItems);
+
+        return view('admin.main',array(
+            'userCount' => $userCount,
+            'downloads' => $downloads,
+            'pictureItemsCount' => $pictureItemsCount
+        ));
     }    
 
     // 轮播图列表

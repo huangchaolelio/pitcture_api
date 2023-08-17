@@ -63,10 +63,10 @@
     <div class="mb-3 has-feedback row">
       <div class="col-7">
         <span class="mdi mdi-check-all form-control-feedback" aria-hidden="true"></span>
-        <input type="text" name="captcha" class="form-control" placeholder="验证码" required>
+        <input type="text" id="captcha_code" name="captcha_code" class="form-control" placeholder="验证码" required>
       </div>
       <div class="col-5 text-right">
-        <img src="images/captcha.png" class="pull-right" id="captcha" style="cursor: pointer;" onclick="this.src=this.src+'?d='+Math.random();" title="点击刷新" alt="captcha">
+        <img src="{{ captcha_src('flat') }}" id="captcha" name="captcha" class="pull-right" style="cursor: pointer;" title="点击图片重新获取验证码" alt="captcha">
       </div>
     </div>
 
@@ -86,87 +86,93 @@
 <script type="text/javascript" src="{{asset('lightyearadmin/js/lyear-loading.js')}}"></script>
 <script type="text/javascript" src="{{asset('lightyearadmin/js/bootstrap-notify.min.js')}}"></script>
 <script type="text/javascript">
-var loader;
-$(document).ajaxStart(function(){
-    $("button:submit").html('登录中...').attr("disabled", true);
-    loader = $('button:submit').lyearloading({
-        opacity: 0.2,
-        spinnerSize: 'nm'
+    // 验证码刷新
+    $('#captcha').click(function(){
+        $(this).prop('src',"{{captcha_src('flat')}}" + Math.random(1000,9999));
+    })
+
+    var loader;
+    $(document).ajaxStart(function(){
+        $("button:submit").html('登录中...').attr("disabled", true);
+        loader = $('button:submit').lyearloading({
+            opacity: 0.2,
+            spinnerSize: 'nm'
+        });
+    }).ajaxStop(function(){
+        loader.destroy();
+        $("button:submit").html('立即登录').attr("disabled", false);
     });
-}).ajaxStop(function(){
-    loader.destroy();
-    $("button:submit").html('立即登录').attr("disabled", false);
-});
-$('.signin-form').on('submit', function(event) {
-    if ($(this)[0].checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-        $(this).addClass('was-validated');
-        return false;
-    }
-    
-    var $data  = $(this).serialize();
-    
-    $.post($(this).attr('action'), $data, function(res) {
-        if (res.code) {
-        // 这里没有后端地址，就直接假设成功
+
+    $('.signin-form').on('submit', function(event) {
+        if ($(this)[0].checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            $(this).addClass('was-validated');
+            return false;
+        }
+        
+        var $data  = $(this).serialize();
+        
+        $.post($(this).attr('action'), $data, function(res) {
+            if (res.code) {
+            // 这里没有后端地址，就直接假设成功
+                $.notify({
+    	            message: '登录成功，页面即将跳转~',
+    	        },{
+    	            type: 'success',
+    	            placement: {
+    	            	from: 'top',
+    	            	align: 'right'
+    	            },
+    	            z_index: 10800,
+    	            delay: 1500,
+                    animate: {
+                        enter: 'animate__animated animate__fadeInUp',
+                        exit: 'animate__animated animate__fadeOutDown'
+                    }
+    	        });
+                setTimeout(function () {
+                    location.href = '{{url('admin/index')}}';
+                }, 1500);
+            } else {
+                $.notify({
+    	            message: '登录失败，错误原因：' + res.msg,
+    	        },{
+    	            type: 'danger',
+    	            placement: {
+    	            	from: 'top',
+    	            	align: 'right'
+    	            },
+    	            z_index: 10800,
+    	            delay: 1500,
+                    animate: {
+                        enter: 'animate__animated animate__shakeX',
+                        exit: 'animate__animated animate__fadeOutDown'
+                    }
+    	        });
+    			$('#password').val('');
+                $("#captcha").click();
+            }
+        }).fail(function () {
             $.notify({
-	            message: '登录成功，页面即将跳转~',
-	        },{
-	            type: 'success',
-	            placement: {
-	            	from: 'top',
-	            	align: 'right'
-	            },
-	            z_index: 10800,
-	            delay: 1500,
-                animate: {
-                    enter: 'animate__animated animate__fadeInUp',
-                    exit: 'animate__animated animate__fadeOutDown'
-                }
-	        });
-            setTimeout(function () {
-                location.href = '{{url('admin/index')}}';
-            }, 1500);
-        } else {
-            $.notify({
-	            message: '登录失败，错误原因：' + res.msg,
-	        },{
-	            type: 'danger',
-	            placement: {
-	            	from: 'top',
-	            	align: 'right'
-	            },
-	            z_index: 10800,
-	            delay: 1500,
+    	        message: '服务器错误',
+    	    },{
+    	        type: 'danger',
+    	        placement: {
+    	        	from: 'top',
+    	        	align: 'right'
+    	        },
+    	        z_index: 10800,
+    	        delay: 1500,
                 animate: {
                     enter: 'animate__animated animate__shakeX',
                     exit: 'animate__animated animate__fadeOutDown'
                 }
-	        });
-			$('#password').val('');
-            $("#captcha").click();
-        }
-    }).fail(function () {
-        $.notify({
-	        message: '服务器错误',
-	    },{
-	        type: 'danger',
-	        placement: {
-	        	from: 'top',
-	        	align: 'right'
-	        },
-	        z_index: 10800,
-	        delay: 1500,
-            animate: {
-                enter: 'animate__animated animate__shakeX',
-                exit: 'animate__animated animate__fadeOutDown'
-            }
-	    });
-    });
+    	    });
+        });
 
-    return false;
-});
+        return false;
+    });
 </script>
 </body>
 </html>
