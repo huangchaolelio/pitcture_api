@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 <meta name="keywords" content="后台模板,后台管理系统">
-<meta name="description" content="基于Bootstrap v5.1.3的后台管理系统。">
-<title>首页 - 后台管理系统</title>
+<meta name="description" content="基于Bootstrap v5.1.3的后台管理系统的HTML模板。">
+<title>首页 - 后台管理</title>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-touch-fullscreen" content="yes">
@@ -28,7 +28,7 @@
             <span class="avatar-md rounded-circle bg-white bg-opacity-25 avatar-box">
               <i class="mdi mdi-currency-cny fs-4"></i>
             </span>
-            <span class="fs-4">102,125.00</span>
+            <span class="fs-4">0</span>
           </div>
           <div class="text-end">今日收入</div>
         </div>
