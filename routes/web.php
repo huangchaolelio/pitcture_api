@@ -165,4 +165,10 @@ Route::group(['prefix' => 'admin', 'middleware' =>'adminLogin'], function () {
 
     // 退出登录
     Route::get('logout', [App\Http\Controllers\Admin\AdminController::class, 'logout']);
+
+    // 修改密码
+    Route::get('edit_pwd', [App\Http\Controllers\Admin\AdminController::class, 'editPwd']);
+
+    // 保存修改的密码
+    Route::post('edit_pwd', [App\Http\Controllers\Admin\AdminController::class, 'saveEditPwd']);
 });

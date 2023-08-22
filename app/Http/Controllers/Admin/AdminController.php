@@ -254,4 +254,32 @@ class AdminController extends Controller
         Session::put('username', '');
         return redirect('admin/login');
     }
+
+    // 修改密码
+    public function editPwd()
+    {
+        return view('admin/edit_pwd');
+    }
+
+    // 保存修改的密码
+    public function saveEditPwd(Request $request)
+    {
+        $oldpwd = $request->oldpwd;
+        $newpwd = $request->newpwd;
+
+        $admin = AdminUsers::where('username', Session::get('username'))->first();
+
+        // 确认旧密码是否正确
+        if (!Hash::check($oldpwd, $admin->password))
+        {
+            return ['code' => 0, 'msg' => '旧密码错误'];
+        }
+
+        // 保存新密码
+        $admin->password = Hash::make($newpwd);
+        $admin->save();
+
+        return ['code' => 1, 'msg' => '密码修改成功'];
+
+    }
 }

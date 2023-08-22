@@ -293,7 +293,7 @@
                 </a>
               </li>
               <li>
-                <a class="multitabs dropdown-item" data-url="lyear_pages_edit_pwd.html"
+                <a class="multitabs dropdown-item" data-url="{{url('admin/edit_pwd')}}"
                   href="javascript:void(0)">
                   <i class="mdi mdi-lock-outline"></i>
                   <span>修改密码</span>

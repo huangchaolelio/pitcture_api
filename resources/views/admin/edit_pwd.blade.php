@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 <meta name="keywords" content="后台模板,后台管理系统">
 <meta name="description" content="一个基于Bootstrap v5.1.3的后台管理系统的HTML模板。">
-<title>新增文档 - 后台管理</title>
+<title>修改密码 - 后台管理</title>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-touch-fullscreen" content="yes">
@@ -26,18 +26,22 @@
     
     <div class="col-lg-12">
       <div class="card">
-        <header class="card-header"><div class="card-title">小程序设置</div></header>
+        <header class="card-header"><div class="card-title">修改密码</div></header>
         <div class="card-body">
           
-          <form action="{{url('admin/wechat_app')}}" method="post" class="row sub_form">
+          <form action="{{url('admin/edit_pwd')}}" method="post" class="row sub_form">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
             <div class="mb-3 col-md-12">
-              <label for="appid" class="form-label">*AppId</label>
-              <input type="text" class="form-control" id="appid" name="appid" value="{{$appid}}" placeholder="请输入AppId" />
+              <label for="appid" class="form-label">*旧密码</label>
+              <input type="password" class="form-control" id="oldpwd" name="oldpwd" value="" placeholder="请输入旧密码" />
             </div>
             <div class="mb-3 col-md-12">
-              <label for="secretkey" class="form-label">*AppSecret</label>
-              <input type="text" class="form-control" id="appsecret" name="appsecret" value="{{$appsecret}}" placeholder="请输入AppSecret" />
+              <label for="secretkey" class="form-label">*新密码</label>
+              <input type="text" class="form-control" id="newpwd" name="newpwd" value="" placeholder="请输入新密码" />
+            </div>
+            <div class="mb-3 col-md-12">
+              <label for="secretkey" class="form-label">*密码确认</label>
+              <input type="password" class="form-control" id="isnewpwd" name="isnewpwd" value="" placeholder="再次输入新密码" />
             </div>
             <div class="mb-3 col-md-12">
               <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">确 定</button>
@@ -61,22 +65,39 @@
 <script type="text/javascript">
 
   $('.sub_form').on('submit', function(event) {
-    var $appid = $('#appid').val();
-    var $appsecret = $('#appsecret').val();
-    if($.trim($appid) == '') {
+    var $oldpwd = $('#oldpwd').val();
+    var $newpwd = $('#newpwd').val();
+    var $isnewpwd = $('#isnewpwd').val();
+    if($.trim($oldpwd) == '') {
       $.alert({
         title: '提示',
         icon: 'mdi mdi-alert',
         type: 'orange',
-        content: 'AppId不能为空',
+        content: '旧密码不能为空',
       });
       return false;
-    } else if($.trim($appsecret) == '') {
+    } else if($.trim($newpwd) == '') {
       $.alert({
         title: '提示',
         icon: 'mdi mdi-alert',
         type: 'orange',
-        content: 'appsecret不能为空',
+        content: '新密码不能为空',
+      });
+      return false;
+    } else if($.trim($isnewpwd) == '') {
+      $.alert({
+        title: '提示',
+        icon: 'mdi mdi-alert',
+        type: 'orange',
+        content: '确认密码不能为空',
+      });
+      return false;
+    } else if($newpwd != $isnewpwd) {
+      $.alert({
+        title: '提示',
+        icon: 'mdi mdi-alert',
+        type: 'orange',
+        content: '两次输入密码不一样，请确认。',
       });
       return false;
     } else {
@@ -87,9 +108,19 @@
             title: '提示',
             icon: 'mdi mdi-alert',
             type: 'orange',
+            // 密码修改成功
             content: res.msg,
           });
-        }      
+        }
+        if(res.code == 0) {        
+          $.alert({
+            title: '提示',
+            icon: 'mdi mdi-alert',
+            type: 'orange',
+            // 输入的旧密码错误
+            content: res.msg,
+          });
+        }     
       });
       return false;
     }
