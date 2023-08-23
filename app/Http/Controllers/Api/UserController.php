@@ -55,9 +55,9 @@ class UserController extends Controller
             // 如果用户是第一次登录，保存用户信息到数据库
             $user = new Users();
             $user->openid = $openid; // 微信用户身份证明id
-            $user->nickname = '昵称' . mb_substr($openid, 5);
+            $user->nickname = '用户' . mb_substr($openid, -5);
             $user->gender = 2; //用户性别：0-男，1-女，2-保密
-            $user->avatar_url = 'https://' . $_SERVER['Http_HOST'] . '/images/avatarUrl.jpg'; // 默认头像路径
+            $user->avatar_url = 'https://picture-api.mdoo.cn' . '/images/avatarUrl.jpg'; // 默认头像路径
             $user->created_time = time();
             $user->updated_time = time();
             $user->save();
