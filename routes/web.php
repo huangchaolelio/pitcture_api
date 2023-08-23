@@ -29,10 +29,10 @@ Route::group(['prefix' => 'admin', 'middleware' =>'adminLogin'], function () {
     Route::get('main', [App\Http\Controllers\Admin\AdminController::class, 'main']);
 
     // 新增图片分类
-    Route::get('add_picture_category', [App\Http\Controllers\Admin\PictureCategoryController::class, 'add_picture_category']);
+    Route::post('add_picture_category', [App\Http\Controllers\Admin\PictureCategoryController::class, 'add_picture_category']);
 
-    // 保存图片分类
-    Route::post('save_picture_category', [App\Http\Controllers\Admin\PictureCategoryController::class, 'save_picture_category']);
+    // 编辑更新图片分类
+    Route::post('update_picture_category', [App\Http\Controllers\Admin\PictureCategoryController::class, 'update_picture_category']);
 
     // 图片分类列表
     Route::get('picture_category_list', [App\Http\Controllers\Admin\PictureCategoryController::class, 'picture_category_list']);

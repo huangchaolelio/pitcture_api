@@ -107,14 +107,8 @@ class PictureCategoryController extends Controller
         return ['code' => 1, 'msg' => '图片分类删除成功'];
     }
 
-    // 增加图片分类
-    public function add_picture_category()
-    {
-        return view('admin.add_picture_category');
-    }
-
-    // 保存图片分类
-    public function save_picture_category(Request $request)
+    // 添加图片分类
+    public function add_picture_category(Request $request)
     {
         $picturecategory = new PictureCategory();
 
@@ -127,6 +121,20 @@ class PictureCategoryController extends Controller
 
         // return "保存分类成功";
         return ['code' => 1, 'msg' => '保存分类成功'];
+    }
+
+    // 编辑更新图片分类
+    public function update_picture_category(Request $request)
+    {
+        $picturecategory = PictureCategory::find($request->input('data_id'));
+        $picturecategory->title = $request->input('title');
+        $picturecategory->orders = $request->input('orders');
+        $picturecategory->is_show = $request->input('isshow');
+        $picturecategory->updated_time = time();
+        $picturecategory->save();
+
+        // return "修改分类成功";
+        return ['code' => 1, 'msg' => '修改分类成功'];
     }
 
     // 图片分类列表

@@ -14,4 +14,10 @@ class Users extends Model
 
     //关闭更新  'updated_at`, `created_at' 字段
     public $timestamps = false;
+
+    protected $hidden = [
+        'openid',
+        'mobile',
+        'email',
+    ];
 }

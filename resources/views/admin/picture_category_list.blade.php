@@ -28,8 +28,7 @@
         <header class="card-header"><div class="card-title">图片分类列表</div></header>
         <div class="card-body">
           <div class="card-search mb-2-5">
-            <form class="search-form" method="get" action="#!" role="form">
-              
+            <form class="search-form" method="get" action="#!" role="form">              
               <div class="row">
                 <div class="col-md-4">
                   <div class="row">
@@ -43,14 +42,13 @@
                   <button type="submit" class="btn btn-sm btn-primary me-1">搜索</button>
                   <button type="reset" class="btn btn-sm btn-default">重置</button>
                 </div>
-              </div>
-              
+              </div>              
             </form>
           </div>
           <form id="category" method="post" action="">
           <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}" />
           <div class="card-btns mb-2-5">
-            <a class="btn btn-sm btn-primary me-1" data-bs-toggle="modal" data-bs-target="#addModal"><i class="mdi mdi-plus"></i> 新增</a>
+            <a class="btn btn-sm btn-primary me-1" data-bs-toggle="modal" data-bs-target="#myModal" onclick="addInfo();"><i class="mdi mdi-plus"></i> 新增</a>
             <a class="btn btn-sm btn-success me-1" onclick="qiyong();"><i class="mdi mdi-check"></i> 启用</a>
             <a class="btn btn-sm btn-warning me-1" onclick="jinyong();"><i class="mdi mdi-block-helper"></i> 禁用</a>
             <a class="btn btn-sm btn-danger" onclick="confirm_Ids();"><i class="mdi mdi-window-close"></i> 删除</a>
@@ -100,7 +98,7 @@
                   <td>{{date('Y-m-d H:i', $picture->updated_time)}}</td>
                   <td>
                     <div class="btn-group btn-group-sm">
-                      <a class="btn btn-default" href="#!" data-bs-toggle="tooltip" title="编辑"><i class="mdi mdi-pencil"></i></a>
+                      <a class="btn btn-default" href="#!" data-bs-toggle="modal" data-bs-target="#myModal" title="编辑" onclick="editInfo({{$loop->iteration}});"><i class="mdi mdi-pencil"></i></a>
                       <a class="btn btn-default" data-bs-toggle="tooltip" title="删除" onclick="confirm_Id([{{$picture->id}}]);"><i class="mdi mdi-window-close"></i></a>
                     </div>
                   </td>
@@ -120,21 +118,51 @@
   
 </div>
 
-<!--add Modal -->
-<div class="modal fade" id="addModal">
+<!--myModal -->
+<div class="modal fade" id="myModal">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content">      
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="addModalLabel">新增图片分类</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" style="height:500px;">
-        <iframe id="iframe" width="100%" height="100%" frameborder="0"></iframe>
+      <div class="modal-body">
+        <form id="sub_form">
+        <div class="card-body">
+            <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}" />
+            <input type="hidden" id="data_id" name="data_id" value="" />
+            <div class="mb-3 col-md-12">
+              <label for="title" class="form-label">*分类名称</label>
+              <input type="text" class="form-control" id="title" name="title" value="" placeholder="输入分类名称" />
+            </div>
+            <div class="mb-3 col-md-12">
+              <label for="sort" class="form-label">显示顺序</label>
+              <input type="text" class="form-control" id="orders" name="orders" value="0" />
+            </div>
+            <div class="mb-3 col-md-12">
+              <label for="status" class="form-label">上架状态</label>
+              <div class="clearfix">
+                <div class="form-check form-check-inline">
+                  <input type="radio" id="isshow" name="isshow" value="1" class="form-check-input" checked>
+                  <label class="form-check-label" for="shangjia">上架</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input type="radio" id="isshow" name="isshow" value="0" class="form-check-input">
+                  <label class="form-check-label" for="xiajia">下架</label>
+                </div>
+              </div>
+            </div>         
+        </div>
+        </form> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-primary ajax-post sub_type" target-form="add-form" onclick="add_or_update()">提 交</button>
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">关闭</button>
       </div>
     </div>
   </div>
 </div>
-<!-- add modal end -->
+<!-- myModal end -->
 
 <script type="text/javascript" src="{{asset('lightyearadmin/js/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('lightyearadmin/js/popper.min.js')}}"></script>
@@ -290,14 +318,86 @@
     });
   }
 
-  // Bootstrap模态对话框中显示动态内容
-  const addModal = document.getElementById('addModal')
-  addModal.addEventListener('show.bs.modal', event => {
-    // 获取触发模态的按钮
-    var button = $(event.relatedTarget);
-    var frameSrc = "{{url('admin/add_picture_category')}}";
-    $("#iframe").attr("src", frameSrc);
-  })
+  // 新增 modal
+  function addInfo()
+  {
+    $('.modal-title').text("新增图片分类");
+    //重置表单
+    $('#sub_form')[0].reset();
+    // 设置data_id 为空
+    $('#myModal #data_id').val('');
+  }
+
+  // 修改 modal
+  function editInfo(index)
+  {
+    $('.modal-title').text('编辑图片分类');
+    let data_id = $('.table')[0].rows[index].cells[1].innerText;
+    let title = $('.table')[0].rows[index].cells[2].innerText;
+    let orders = $('.table')[0].rows[index].cells[3].innerText;
+    $('#myModal #data_id').val(data_id);
+    $('#myModal #title').val(title);
+    $('#myModal #orders').val(orders);
+  }
+
+  // 新增/修改后提交
+  function add_or_update()
+  {
+    let data_id = $('#data_id').val();
+    // console.log(data_id);
+    let title = $('#title').val();
+    let orders = $('#orders').val();
+    if ($.trim(title) == '') {
+      $.alert({
+        title: '提示',
+        icon: 'mdi mdi-alert',
+        type: 'orange',
+        content: '分类名称不能为空',
+      });
+      return false;
+    } 
+    else if ($.trim(orders) == '') {
+      $.alert({
+        title: '提示',
+        icon: 'mdi mdi-alert',
+        type: 'orange',
+        content: '显示顺序不能为空',
+      });
+      return false;
+    }
+
+    if(data_id !== '') {
+      // console.log('修改');
+      $.ajax({
+        type: "POST",
+        url: "{{url('admin/update_picture_category')}}",
+        dataType: "json",
+        data: $('#sub_form').serialize(),
+        success: function (res) {
+          // console.log(res);
+          // 关闭模态框并清除框内数据，否则下次打开还是上次的数据
+          $("#sub_form")[0].reset();
+          $('#myModal').modal('hide');
+          location.reload();
+        }
+      })
+    } else {
+      // console.log('增加');
+      $.ajax({
+        type: "POST",
+        url: "{{url('admin/add_picture_category')}}",
+        dataType: "json",
+        data: $('#sub_form').serialize(),
+        success: function (res) {
+          // console.log(res);
+          // 关闭模态框并清除框内数据，否则下次打开还是上次的数据
+          $("#sub_form")[0].reset();
+          $('#myModal').modal('hide');
+          location.reload();
+        }
+      })
+    }
+  }
 </script>
 </body>
 </html>
