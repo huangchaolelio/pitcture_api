@@ -103,7 +103,7 @@
                     <td>{{date('Y-m-d H:i', $banner->updated_time)}}</td>
                     <td>
                       <div class="btn-group btn-group-sm">
-                        <a class="btn btn-default" href="{{url('admin/edit_banner?id=' . $banner->id)}}" data-bs-toggle="tooltip" title="编辑"><i class="mdi mdi-pencil"></i></a>
+                        <a href="#!" class="btn btn-default js-create-tab" data-bs-toggle="tooltip" title="编辑" data-title="编辑轮播图" data-url="{{url('admin/edit_banner?id=' . $banner->id)}}"><i class="mdi mdi-pencil"></i></a>
                         <a class="btn btn-default" data-bs-toggle="tooltip" title="删除" onclick="confirm_Id([{{$banner->id}}])"><i class="mdi mdi-window-close"></i></a>
                       </div>
                     </td>

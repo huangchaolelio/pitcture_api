@@ -335,9 +335,19 @@
     let data_id = $('.table')[0].rows[index].cells[1].innerText;
     let title = $('.table')[0].rows[index].cells[2].innerText;
     let orders = $('.table')[0].rows[index].cells[3].innerText;
+    let isshow = $('.table')[0].rows[index].cells[4].innerText;
+    // console.log(isshow);
     $('#myModal #data_id').val(data_id);
     $('#myModal #title').val(title);
     $('#myModal #orders').val(orders);
+    if(isshow == "上架")
+    {
+      $("input[name='isshow'][value='1']").attr("checked", true);
+    }
+    if(isshow == "待审核")
+    {
+      $("input[name='isshow'][value='0']").attr("checked", true);
+    }
   }
 
   // 新增/修改后提交

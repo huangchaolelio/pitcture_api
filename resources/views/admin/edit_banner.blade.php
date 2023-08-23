@@ -90,7 +90,7 @@
 <script type="text/javascript" src="{{asset('lightyearadmin/js/jquery-confirm/jquery-confirm.min.js')}}"></script>
 <!-- 上传图片插件js -->
 <script src="{{asset('ajaximageupload/js/jquery.upload.js')}}"></script>
-<script>
+<script>  
   $('.add').on('submit', function(event) {
     var $first_title = $('#first_title').val();
     var $second_title = $('#second_title').val();
