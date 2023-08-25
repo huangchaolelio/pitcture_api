@@ -140,7 +140,7 @@ class PictureCategoryController extends Controller
     // 图片分类列表
     public function picture_category_list()
     {
-        $picture_list = PictureCategory::orderBy('orders', 'desc')->paginate(15);
+        $picture_list = PictureCategory::orderBy('orders', 'asc')->paginate(15);
         Paginator::useBootstrapFive();
 
         return view('admin.picture_category_list', array(

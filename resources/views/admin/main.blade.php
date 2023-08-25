@@ -21,7 +21,7 @@
 
   <div class="row">
 
-    <div class="col-md-6 col-xl-3">
+    <div class="col-md-6 col-xl-3" style="width:20%;">
       <div class="card bg-primary text-white">
         <div class="card-body">
           <div class="d-flex justify-content-between">
@@ -35,7 +35,7 @@
       </div>
     </div>
 
-  	<div class="col-md-6 col-xl-3">
+  	<div class="col-md-6 col-xl-3" style="width:20%;">
   	  <div class="card bg-danger text-white">
   	    <div class="card-body">
   	      <div class="d-flex justify-content-between">
@@ -49,7 +49,7 @@
   	  </div>
   	</div>
 
-  	<div class="col-md-6 col-xl-3">
+  	<div class="col-md-6 col-xl-3" style="width:20%;">
   	  <div class="card bg-success text-white">
   	    <div class="card-body">
   	      <div class="d-flex justify-content-between">
@@ -63,7 +63,21 @@
   	  </div>
   	</div>
 
-  	<div class="col-md-6 col-xl-3">
+    <div class="col-md-6 col-xl-3" style="width:20%;">
+      <div class="card bg-info text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <span class="avatar-md rounded-circle bg-white bg-opacity-25 avatar-box">
+              <i class="mdi mdi-file-multiple fs-4"></i>
+            </span>
+            <span class="fs-4">{{$pictureCount}}</span>
+          </div>
+          <div class="text-end">图辑数量</div>
+        </div>
+      </div>
+    </div>
+
+  	<div class="col-md-6 col-xl-3" style="width:20%;">
   	  <div class="card bg-purple text-white">
   	    <div class="card-body">
   	      <div class="d-flex justify-content-between">
@@ -110,121 +124,69 @@
   	<div class="col-lg-12">
   	  <div class="card">
   	    <header class="card-header">
-  	      <div class="card-title">项目信息</div>
+  	      <div class="card-title">系统信息</div>
   	    </header>
-  		<div class="card-body">
-  		  <div class="table-responsive">
-  		    <table class="table table-hover">
-  		      <thead>
-  		        <tr>
-  		          <th>#</th>
-  		          <th>项目名称</th>
-  		          <th>开始日期</th>
-  		          <th>截止日期</th>
-  		          <th>状态</th>
-  		          <th>进度</th>
-  		        </tr>
-  		      </thead>
-  			  <tbody>
-  			    <tr>
-  			      <td>1</td>
-  			      <td>设计新主题</td>
-  			      <td>10/02/2019</td>
-  			      <td>12/05/2019</td>
-  			      <td><span class="badge bg-warning">待定</span></td>
-  			      <td>
-  			        <div class="progress progress-xs">
-  			          <div class="progress-bar progress-bar-striped bg-warning" style="width: 45%;"></div>
-  			        </div>
-  			      </td>
-  			    </tr>
-  			    <tr>
-  			      <td>2</td>
-  			      <td>网站重新设计</td>
-  			      <td>01/03/2019</td>
-  			      <td>12/04/2019</td>
-  			      <td><span class="badge bg-success">进行中</span></td>
-  			      <td>
-  			        <div class="progress progress-xs">
-  			          <div class="progress-bar progress-bar-striped bg-success" style="width: 30%;"></div>
-  			        </div>
-  			      </td>
-  			    </tr>
-  			    <tr>
-  			      <td>3</td>
-  			      <td>模型设计</td>
-  			      <td>10/10/2019</td>
-  			      <td>12/11/2019</td>
-  			      <td><span class="badge bg-warning">待定</span></td>
-  			      <td>
-  			        <div class="progress progress-xs">
-  			          <div class="progress-bar progress-bar-striped bg-warning" style="width: 25%;"></div>
-  			        </div>
-  			      </td>
-  			    </tr>
-  			    <tr>
-  			      <td>4</td>
-  			      <td>后台管理系统模板设计</td>
-  			      <td>25/01/2019</td>
-  			      <td>09/05/2019</td>
-  			      <td><span class="badge bg-success">进行中</span></td>
-  			      <td>
-  			        <div class="progress progress-xs">
-  			          <div class="progress-bar progress-bar-striped bg-success" style="width: 55%;"></div>
-  			        </div>
-  			      </td>
-  			    </tr>
-  			    <tr>
-  			      <td>5</td>
-  			      <td>前端设计</td>
-  			      <td>10/10/2019</td>
-  			      <td>12/12/2019</td>
-  			      <td><span class="badge bg-danger">未开始</span></td>
-  			      <td>
-  			        <div class="progress progress-xs">
-  			          <div class="progress-bar progress-bar-striped bg-danger" style="width: 0%;"></div>
-  			        </div>
-  			      </td>
-  			    </tr>
-  			    <tr>
-  			      <td>6</td>
-  			      <td>桌面软件测试</td>
-  			      <td>10/01/2019</td>
-  			      <td>29/03/2019</td>
-  			      <td><span class="badge bg-success">进行中</span></td>
-  			      <td>
-  			        <div class="progress progress-xs">
-  			          <div class="progress-bar progress-bar-striped bg-success" style="width: 75%;"></div>
-  			        </div>
-  			      </td>
-  			    </tr>
-  			    <tr>
-  			      <td>7</td>
-  			      <td>APP改版开发</td>
-  			      <td>25/02/2019</td>
-  			      <td>12/05/2019</td>
-  			      <td><span class="badge bg-danger">暂停</span></td>
-  			      <td>
-  			        <div class="progress progress-xs">
-  			          <div class="progress-bar progress-bar-striped bg-danger" style="width: 15%;"></div>
-  			        </div>
-  			      </td>
-  			    </tr>
-  			    <tr>
-  			      <td>8</td>
-  			      <td>Logo设计</td>
-  			      <td>10/02/2019</td>
-  			      <td>01/03/2019</td>
-  			      <td><span class="badge bg-warning">完成</span></td>
-  			      <td>
-  			        <div class="progress progress-xs">
-  			          <div class="progress-bar progress-bar-striped bg-success" style="width: 100%;"></div>
-  			        </div>
-  			      </td>
-  			    </tr>
-  			  </tbody>
+    		<div class="card-body">
+    		  <div class="table-responsive">
+    		    <table class="table table-bordered table-hover" style="table-layout:fixed;word-break:break-all;">
+      			  <tbody>
+      			    <tr>
+      			      <td width="180px">服务器IP地址：</td>
+                  <td>{{$server_addr}}</td>
+      			      <td width="180px">服务器域名：</td>
+                  <td>{{$server_name}}</td>
+      			    </tr>
+                <tr>
+                  <td>服务器端口：</td>
+                  <td>{{$server_port}}</td>
+                  <td>服务器版本：</td>
+                  <td>{{$server_version}}</td>
+                </tr>
+                <tr>
+                  <td>服务器操作系统：</td>
+                  <td>{{$system}}</td>
+                  <td>PHP版本：</td>
+                  <td>{{$php_version}}</td>
+                </tr>
+                <tr>
+                  <td>获取PHP安装路径：</td>
+                  <td>{{$default_include_path}}</td>
+                  <td>获取Zend版本：</td>
+                  <td>{{$zend_version}}</td>
+                </tr>
+                <tr>
+                  <td>Laravel版本：</td>
+                  <td>{{$laravel_version}}</td>
+                  <td>PHP运行方式：</td>
+                  <td>{{$php_sapi_name}}</td>
+                </tr>
+                <tr>
+                  <td>服务器当前时间：</td>
+                  <td>{{$now_time}}</td>
+                  <td>最大上传限制：</td>
+                  <td>{{$upload_max_filesize}}</td>
+                </tr>
+                <tr>
+                  <td>最大执行时间：</td>
+                  <td>{{$max_execution_time}}</td>
+                  <td>脚本运行占用最大内存：</td>
+                  <td>{{$memory_limit}}</td>
+                </tr>
+                <tr>
+                  <td>服务器解译引擎：</td>
+                  <td>{{$server_software}}</td>
+                  <td>服务器系统目录：</td>
+                  <td>{{$systemroot}}</td>
+                </tr>
+                <tr>
+                  <td>通信协议的名称和版本：</td>
+                  <td>{{$server_protcol}}</td>
+                  <td>服务器语言：</td>
+                  <td>{{$http_accept_language}}</td>
+                </tr>
+      			  </tbody>
             </table>
-  	      </div>
+    	     </div>
   	    </div>
   	  </div>
     </div>

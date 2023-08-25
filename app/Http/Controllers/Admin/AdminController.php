@@ -60,7 +60,7 @@ class AdminController extends Controller
     }
 
     // 管理后台
-    public function index()
+    public function index(Request $request)
     {
         return view('admin.index');
     }
@@ -68,18 +68,53 @@ class AdminController extends Controller
     // 后台首页
     public function main()
     {
+        // 用户数量
         $users = Users::get();
         $userCount = count($users);
 
+        // 下载总量
         $downloads = Picture::get()->sum('download');
 
+        // 图辑数量
+        $picture = Picture::get();
+        $pictureCount = count($picture);
+        
+        // 图片数量
         $pictureItems = PictureItem::get();
         $pictureItemsCount = count($pictureItems);
+
+        // 检查键是否存在,isset() 或 array_key_exists()
+        if (isset($_SERVER['SystemRoot'])) {
+            $systemroot = $_SERVER['SystemRoot'];
+        } else {
+            $systemroot = '未知';
+        }
 
         return view('admin.main',array(
             'userCount' => $userCount,
             'downloads' => $downloads,
-            'pictureItemsCount' => $pictureItemsCount
+            'pictureItemsCount' => $pictureItemsCount,
+            'pictureCount' => $pictureCount,
+
+            // 系统信息
+            'server_addr' => $_SERVER['SERVER_ADDR'], // 服务器ip地址
+            'server_name' => $_SERVER['SERVER_NAME'], // 服务器域名
+            'server_port' => $_SERVER['SERVER_PORT'], // 服务器端口
+            'server_version' => php_uname('s').php_uname('r'), // 服务器版本
+            'system' => php_uname(), // 服务器操作系统
+            'php_version' => PHP_VERSION, // PHP版本
+            'default_include_path' => DEFAULT_INCLUDE_PATH, //PHP安装路径
+            'zend_version' => Zend_Version(), // 获取Zend版本
+            'laravel_version' => app()::VERSION, // Laravel版本
+            'php_sapi_name' => php_sapi_name(), // PHP运行方式
+            'now_time' => date("Y-m-d H:i:s"), // 服务器当前时间
+            'upload_max_filesize' => get_cfg_var("upload_max_filesize"), // 最大上传限制
+            'max_execution_time' => get_cfg_var("max_execution_time")."秒 ", // 最大执行时间
+            'memory_limit' => get_cfg_var("memory_limit"), // 脚本运行占用最大内存
+            'server_software' => $_SERVER['SERVER_SOFTWARE'], // 服务器解译引擎
+            'systemroot' => $systemroot, // 服务器系统目录
+            'http_accept_language' => $_SERVER['HTTP_ACCEPT_LANGUAGE'], // 服务器语言
+            'server_protcol' => $_SERVER['SERVER_PROTOCOL'], // 通信协议的名称和版本
         ));
     }    
 
