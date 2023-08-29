@@ -58,6 +58,7 @@
               </a>
               <ul class="nav nav-subnav">
                 <li> <a class="multitabs" href="{{url('admin/banner_list')}}">轮播图管理</a> </li>
+                <li> <a class="multitabs" href="{{url('admin/article')}}">文章管理</a> </li>
               </ul>
             </li>
             <li class="nav-item nav-item-has-subnav">

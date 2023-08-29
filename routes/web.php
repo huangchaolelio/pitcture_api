@@ -171,4 +171,27 @@ Route::group(['prefix' => 'admin', 'middleware' =>'adminLogin'], function () {
 
     // 保存修改的密码
     Route::post('edit_pwd', [App\Http\Controllers\Admin\AdminController::class, 'saveEditPwd']);
+
+    // 文章列表
+    Route::get('article', [App\Http\Controllers\Admin\ArticleController::class, 'article']);
+
+    // 添加|编辑文章
+    Route::get('post_article', [App\Http\Controllers\Admin\ArticleController::class, 'postArticle']);
+
+    // 保存添加的文章内容
+    Route::post('save_article', [App\Http\Controllers\Admin\ArticleController::class, 'saveArticle']);
+
+    // 、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
+
+    // 文章批量审核通过
+    Route::post('article_show_ids', [App\Http\Controllers\Admin\ArticleController::class, 'articleShowIds']);
+
+    // 文章批量隐藏
+    Route::post('article_hiden_ids', [App\Http\Controllers\Admin\ArticleController::class, 'articleHidenIds']);
+
+    // 文章批量删除
+    Route::post('article_del_ids', [App\Http\Controllers\Admin\ArticleController::class, 'articleDelIds']);
+
+    // 文章设置是否启用状态
+    Route::get('article_status', [App\Http\Controllers\Admin\ArticleController::class, 'articleStatus']);
 });

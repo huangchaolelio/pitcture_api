@@ -82,7 +82,7 @@
   	    <div class="card-body">
   	      <div class="d-flex justify-content-between">
   	        <span class="avatar-md rounded-circle bg-white bg-opacity-25 avatar-box">
-              <i class="mdi mdi-file-multiple fs-4"></i>
+              <i class="mdi mdi-panorama-outline fs-4"></i>
             </span>
   	        <span class="fs-4">{{$pictureItemsCount}}</span>
   	      </div>
