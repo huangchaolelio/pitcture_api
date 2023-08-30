@@ -106,14 +106,14 @@ Route::group(['prefix' => 'admin', 'middleware' =>'adminLogin'], function () {
     // 保存小程序设置
     Route::post('wechat_app', [App\Http\Controllers\Admin\WechatAppController::class, 'save_wechat_app']);
 
-    // 图片审核
-    Route::get('picture_audit', [App\Http\Controllers\Admin\AdminController::class, 'picture_audit']);
+    // 图辑列表
+    Route::get('picture_list', [App\Http\Controllers\Admin\PictureController::class, 'picture_list']);
 
     // 图片列表
-    Route::get('picture_list', [App\Http\Controllers\Admin\AdminController::class, 'picture_list']);
+    Route::get('picture_item_list', [App\Http\Controllers\Admin\PictureItemController::class, 'picture_item_list']);
 
     // 会员列表
-    Route::get('users_list', [App\Http\Controllers\Admin\AdminController::class, 'usersList']);
+    Route::get('users_list', [App\Http\Controllers\Admin\UsersController::class, 'usersList']);
 
     // 图辑审核是否显示
     Route::get('picture_show', [App\Http\Controllers\Admin\PictureController::class, 'pictureShow']);
@@ -180,8 +180,6 @@ Route::group(['prefix' => 'admin', 'middleware' =>'adminLogin'], function () {
 
     // 保存添加的文章内容
     Route::post('save_article', [App\Http\Controllers\Admin\ArticleController::class, 'saveArticle']);
-
-    // 、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
 
     // 文章批量审核通过
     Route::post('article_show_ids', [App\Http\Controllers\Admin\ArticleController::class, 'articleShowIds']);

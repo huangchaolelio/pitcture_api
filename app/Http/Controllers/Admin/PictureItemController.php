@@ -4,13 +4,36 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 use App\Models\Picture;
 use App\Models\PictureItem;
 use App\Models\OssConfig;
+use App\Models\Users;
 
 class PictureItemController extends Controller
 {
+    // 图片列表
+    public function picture_item_list()
+    {
+        $pictureitems = PictureItem::orderByDesc('created_time')->paginate(15);
+        Paginator::useBootstrapFive();
+        // Paginator::useBootstrapFour();
+
+        foreach($pictureitems as $pictureitem)
+        {
+            // 获得图辑的信息
+            $pictureitem['picture'] =Picture::where('id', $pictureitem->picture_id)->first();
+
+            // 获得会员的信息
+            $pictureitem['user'] = Users::find($pictureitem->picture->user_id);
+        }
+
+        return view('admin.picture_item_list',array(
+            'pictureitems' => $pictureitems
+        ));
+    }
+
     // 审核是否显示图片（显示或隐藏）
     public function picItemShow(Request $request)
     {
@@ -30,7 +53,7 @@ class PictureItemController extends Controller
 
         $pictureItem->save();
 
-        return redirect('admin/picture_list');
+        return redirect('admin/picture_item_list');
     }
 
     // 图片批量审核通过

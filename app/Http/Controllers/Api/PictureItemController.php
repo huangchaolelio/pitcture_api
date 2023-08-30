@@ -36,10 +36,20 @@ class PictureItemController extends Controller
         // 图片的id
         $pic_item_id = $request->image_id;
 
-        $item_url = PictureItem::find($pic_item_id)->url;
+        // $item_url = PictureItem::find($pic_item_id)->url;
+        $pic_item = PictureItem::find($pic_item_id);
 
-        // 返回图片下载的地址
-        // return $item_url;
+        // 记录图片下载次数
+        $pic_item->download = $pic_item->download + 1;
+        $pic_item->save();
+
+        // 记录图辑下载次数
+        $picture = Picture::find($pic_item->picture_id);
+        $picture->download = $picture->download + 1;
+        $picture->save();
+
+        // 图片地址
+        $item_url = $pic_item->url;
 
         /**
         * 由于小程序下载必须是https地址，七牛云https收费，使用了http不能直接下载，

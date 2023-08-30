@@ -4,11 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 use App\Models\Users;
 
 class UsersController extends Controller
 {
+    // 会员列表
+    public function usersList()
+    {
+        $users = Users::orderByDesc('created_time')->paginate(15);
+        Paginator::useBootstrapFive();
+
+        return view('admin.users_list',array(
+            'users' => $users
+        ));
+    }
+
     // 审核用户是否可以正常登录
     public function userVerify(Request $request)
     {

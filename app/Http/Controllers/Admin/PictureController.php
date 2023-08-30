@@ -4,13 +4,40 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 use App\Models\Picture;
 use App\Models\PictureItem;
 use App\Models\OssConfig;
+use App\Models\PictureCategory;
+use App\Models\PictureDescribe;
+use App\Models\Users;
 
 class PictureController extends Controller
 {
+    // 图辑列表
+    public function picture_list()
+    {
+        $pictures = Picture::orderBy('created_time', 'desc')->paginate(15);
+        Paginator::useBootstrapFive();
+
+        foreach($pictures as $picture)
+        {
+            // 对应分类
+            $picture['picCategory'] = PictureCategory::where('id', $picture->pic_category_id)->first();
+
+            // 对应的描述
+            $picture['describe'] = PictureDescribe::where('picture_id', $picture->id)->first();
+
+            // 对应用户
+            $picture['user'] = Users::where('id', $picture->user_id)->first();
+        }
+
+        return view('admin.picture_list', array(
+            'pictures' => $pictures
+        ));
+    }
+    
     // 审核是否显示图辑（显示或隐藏）
     public function pictureShow(Request $request)
     {
@@ -30,7 +57,7 @@ class PictureController extends Controller
 
         $picture->save();
 
-        return redirect('admin/picture_audit');
+        return redirect('admin/picture_list');
     }
 
     // 图辑批量审核通过

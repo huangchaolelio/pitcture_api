@@ -166,53 +166,24 @@
   //     console.error( err.stack );
   //   });
 
-
   $('.add').on('submit', function(event) {
-    var $first_title = $('#first_title').val();
-    var $second_title = $('#second_title').val();
-    var $url = $('#url').val();
-    var $orders = $('#orders').val();
-    var fileInput = $('.ggy-upload-input').get(0).files[0];
-    if($.trim($first_title) == '') {
+    var title = $('#title').val();
+    if($.trim(title) == '') {
       $.alert({
         title: '提示',
         icon: 'mdi mdi-alert',
         type: 'orange',
-        content: '主标题不能为空',
+        content: '标题不能为空',
       });
       return false;
-    } else if($.trim($second_title) == '') {
-      $.alert({
-        title: '提示',
-        icon: 'mdi mdi-alert',
-        type: 'orange',
-        content: '副标题不能为空',
-      });
-      return false;
-    } else if($.trim($url) == '') {
-      $.alert({
-        title: '提示',
-        icon: 'mdi mdi-alert',
-        type: 'orange',
-        content: '跳转地址不能为空',
-      });
-      return false;
-    } else if($.trim($orders) == '') {
-      $.alert({
-        title: '提示',
-        icon: 'mdi mdi-alert',
-        type: 'orange',
-        content: '显示顺序不能为空',
-      });
-      return false;
-    } else if(!fileInput) {
-      $.alert({
-        title: '提示',
-        icon: 'mdi mdi-alert',
-        type: 'orange',
-        content: '上传图片不能为空',
-      });
-      return false;
+    // } else if(editor == '') {
+    //   $.alert({
+    //     title: '提示',
+    //     icon: 'mdi mdi-alert',
+    //     type: 'orange',
+    //     content: '内容不能为空',
+    //   });
+    //   return false;
     } else {
       form.submit();
       return false;

@@ -46,8 +46,8 @@
                 <span>图库管理</span>
               </a>
               <ul class="nav nav-subnav">
-                <li> <a class="multitabs" href="{{url('admin/picture_audit')}}">图辑列表</a> </li>
-                <li> <a class="multitabs" href="{{url('admin/picture_list')}}">图片列表</a> </li>
+                <li> <a class="multitabs" href="{{url('admin/picture_list')}}">图辑列表</a> </li>
+                <li> <a class="multitabs" href="{{url('admin/picture_item_list')}}">图片列表</a> </li>
                 <li> <a class="multitabs" href="{{url('admin/picture_category_list')}}">图片分类</a> </li>
               </ul>
             </li>
