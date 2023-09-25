@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\PictureCollect;
+use App\Models\Picture;
+use App\Models\PictureItem;
 
 class PictureCollectController extends Controller
 {
@@ -21,6 +23,7 @@ class PictureCollectController extends Controller
            return ['msg' => "您已收藏"];
         }
 
+        // 记录收藏图片的会员
         $pictureCollect = new PictureCollect();
 
         $pictureCollect->picture_id = $picture_id;
@@ -31,7 +34,7 @@ class PictureCollectController extends Controller
 
         $pictureCollect->save();
 
-        return ['msg' => "收藏成功"];    
+        return ['msg' => "收藏成功"];
    }
     
 }
