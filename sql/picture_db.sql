@@ -13,6 +13,8 @@
 
  Date: 13/08/2023 22:44:07
 */
+ create database picture_db DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+use picture_db;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;

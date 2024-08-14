@@ -85,8 +85,8 @@
 
         <div class="sidebar-footer">
           <p class="copyright">
-            <span>Copyright &copy; 2023. </span>
-            <a target="_blank" href="https://www.mdoo.cn">魔豆网</a>
+            <span>Copyright &copy; 2024. </span>
+            <a target="_blank" href="#">天天爱看网</a>
             <span> All rights reserved.</span>
           </p>
         </div>

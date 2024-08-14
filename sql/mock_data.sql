@@ -4,6 +4,8 @@ values (
            1,"admin","admin","test_name","test_avatar","","2024-08-08","2024-08-08"
        );
 
+select * from wechat_app;
+
 select * from picture_db.admin_users;
 
 
@@ -11,15 +13,22 @@ select * from picture_db.admin_users;
 select * from picture_db.banner;
 
 select * from picture_db.picture;
-update   picture_db.picture set title='pinerst',`describe`='pinerst的图片',item_count= 2
+
+
+# update
+
+select * from picture_db.picture_category;
+
+update   picture_db.picture set title='美女',`describe`='pinerst的图片',item_count= 2,pic_category_id =16
 where id = 348;
 
 select * from picture_db.picture_item;
 
-select * from picture_db.picture_category;
+    select * from picture_db.picture_category;
 
-update picture_db.picture_item set url = 'https://i.pinimg.com/originals/bf/64/ce/bf64ceebdf361799f1b9913f3ee0312d.jpg'
-where id=1931;
+update picture_db.picture_item set url
+    = 'https://i.pinimg.com/originals/8d/a5/73/8da573b69498901abdbfc12d16006800.jpg'
+where id=1934;
 
 select * from picture_db.picture;
 
@@ -46,3 +55,7 @@ select * from picture_db.users;
 insert into picture_db.users(id, openid, nickname, mobile, email, avatar_url, gender, age, birthday, score, name, remark, disable, created_time, updated_time)
 values (1,"openid_oUBUG5hAB_8EMrSaqd2HjJQBFg74","test_user","18691849650","349354786@qq.com","https://thirdwx.qlogo.cn/mmopen/vi_32/J31cY2qVWviaOqhjPlr18VY5ic1SUvDESG1mQkicQfFugWibYe7VJIhYJBZYDBib0T4TJVhUOtiaW1TGkJRqIWd3K0dQ/132",1,"18","2024-08-08",100,"sher","sherlock",1,0,0)
 
+
+
+
+select * from users;

@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 <meta name="keywords" content="手机壁纸，精美图片，美女，服饰，穿搭，居家，美食，宠物，旅游，游戏">
 <meta name="description" content="海量高清手机壁纸、苹果安卓壁纸、手机主题，动态壁纸；免费一键去水印，高清无痕。">
-<title>图视界 - 手机壁纸，精美图片</title>
+<title>爱看图 - 手机壁纸，精美图片</title>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-touch-fullscreen" content="yes">
@@ -48,11 +48,11 @@
     }
 </style>
 </head>
-  
+
 <body>
     <div class="container-xxl">
         <div class="row justify-content-center text-center" style="padding:20px 0;">
-            <img src="{{url('images/miniLogo.jpg')}}" style="width:260px;height:auto;" class="rounded d-block" alt="图视界">
+            <img src="{{url('images/miniLogo.jpg')}}" style="width:260px;height:auto;" class="rounded d-block" alt="爱看图">
             <h8><b>扫码访问小程序</b></h8>
         </div>
     </div>
@@ -68,22 +68,22 @@
                             <img src="{{$pictureItem->url}}" class="img-responsive img-rounded">
                         </a>
                         <div class="caption text-center">
-                            <!-- <h8>图视界</h8> -->
+                            <!-- <h8>爱看图</h8> -->
                             <p>
-                                <small>图视界</small>
+                                <small>爱看图</small>
                             </p>
-                        </div> 
+                        </div>
                     </div>
                 </div>
                 @endforeach
                 <!--图片结束-->
             </div>
-        </div>  
+        </div>
     </div>
 
     <div class="container-xxl">
         <div class="row justify-content-center text-center" style="padding:20px 0;">
-            <p style="font-size: 12px;">磨豆网提供技术支持 <a href="https://www.mdoo.cn" target="_blank">www.mdoo.cn</a></p>
+            <p style="font-size: 12px;">天天爱看网提供技术支持 <a href="#" target="_blank"></a></p>
         </div>
     </div>
 </body>
