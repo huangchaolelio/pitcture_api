@@ -37,7 +37,7 @@ class PictureController extends Controller
             'pictures' => $pictures
         ));
     }
-    
+
     // 审核是否显示图辑（显示或隐藏）
     public function pictureShow(Request $request)
     {
@@ -66,6 +66,31 @@ class PictureController extends Controller
         $ids = $request->ids;
         $picture = Picture::whereIn('id', $ids)->update(['is_show'=> 1]);
         return ['code' => 1, 'msg' => '图辑审核通过显示'];
+    }
+
+    // 编辑banner
+    public function editPicture(Request $request)
+    {
+        $picture = Picture::find($request->id);
+
+        return view('admin/edit_picture', ['picture' => $picture]);
+    }
+
+
+    // 保存编辑Picture
+    public function savePicture(Request $request)
+    {
+        $id = $request->id;
+
+        $picture = Picture::find($id);
+
+        $picture->title = $request->title;
+        $picture->describe = $request->describe;
+        $picture->updated_time = time();
+
+        $picture->save();
+        // return ['code' => 1, 'msg' =>'保存成功'];
+        return redirect('admin/picture_list');
     }
 
     // 图辑批量审核隐藏
@@ -107,8 +132,8 @@ class PictureController extends Controller
                     $bucketManager = new \Qiniu\Storage\BucketManager($auth, $config);
 
                     // 获取url字符串截取路径文件名
-                    preg_match('/\/([^\/]+\.[a-z]+)[^\/]*$/', $picitem->url, $match); 
-                    $key = $match[1]; 
+                    preg_match('/\/([^\/]+\.[a-z]+)[^\/]*$/', $picitem->url, $match);
+                    $key = $match[1];
 
                     $err = $bucketManager->delete($bucket, $key);
 
@@ -119,10 +144,10 @@ class PictureController extends Controller
 
                     // 删除图片数据表记录
                      $picitem->delete();
-                 }                
+                 }
             }
         }
-        
+
         // 删除图辑
         $pictures = Picture::whereIn('id', $ids)->delete();
 

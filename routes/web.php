@@ -17,7 +17,7 @@ Route::get('admin/login', [App\Http\Controllers\Admin\AdminController::class, 'l
 // 后台页面登录验证
 Route::post('admin/login', [App\Http\Controllers\Admin\AdminController::class, 'postLogin']);
 
-/** 
+/**
 * 登录成功后可以访问的页面
 **/
 Route::group(['prefix' => 'admin', 'middleware' =>'adminLogin'], function () {
@@ -108,6 +108,12 @@ Route::group(['prefix' => 'admin', 'middleware' =>'adminLogin'], function () {
 
     // 图辑列表
     Route::get('picture_list', [App\Http\Controllers\Admin\PictureController::class, 'picture_list']);
+
+    // 编辑图辑
+    Route::get('edit_picture', [App\Http\Controllers\Admin\PictureController::class, 'editPicture']);
+
+    // 保存图辑
+    Route::post('save_picture', [App\Http\Controllers\Admin\PictureController::class, 'savePicture']);
 
     // 图片列表
     Route::get('picture_item_list', [App\Http\Controllers\Admin\PictureItemController::class, 'picture_item_list']);
