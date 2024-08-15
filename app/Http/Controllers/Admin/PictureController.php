@@ -86,11 +86,50 @@ class PictureController extends Controller
 
         $picture->title = $request->title;
         $picture->describe = $request->describe;
+        $picture->user_id = $request->input('user_id');
+        $picture->device_type = $request->input('device_type');
+        $picture->pic_category_id = $request->input('pic_category_id');
+        $picture->item_count = $request->input('item_count');
         $picture->updated_time = time();
 
         $picture->save();
         // return ['code' => 1, 'msg' =>'保存成功'];
         return redirect('admin/picture_list');
+    }
+
+    // 添加图辑
+    public function add_picture(Request $request)
+    {
+        $picture = new Picture();
+
+        $picture->title = $request->input('title');
+        $picture->describe = $request->input('describe');
+        $picture->user_id = $request->input('user_id');
+        $picture->device_type = $request->input('device_type');
+        $picture->pic_category_id = $request->input('pic_category_id');
+        $picture->item_count = $request->input('item_count');
+        $picture->updated_time = time();
+        $picture->save();
+
+        // return "保存图片成功";
+        return ['code' => 1, 'msg' => '保存图辑成功'];
+    }
+
+    // 编辑更新图辑
+    public function update_picture(Request $request)
+    {
+        $picture = Picture::find($request->input('data_id'));
+        $picture->title = $request->input('title');
+        $picture->describe = $request->input('describe');
+        $picture->user_id = $request->input('user_id');
+        $picture->device_type = $request->input('device_type');
+        $picture->pic_category_id = $request->input('pic_category_id');
+        $picture->item_count = $request->input('item_count');
+        $picture->updated_time = time();
+        $picture->save();
+
+        // return "修改图辑成功";
+        return ['code' => 1, 'msg' => '修改图辑成功'];
     }
 
     // 图辑批量审核隐藏

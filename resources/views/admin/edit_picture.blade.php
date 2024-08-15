@@ -47,7 +47,22 @@
 <!--              <label for="sort" class="form-label">图片分类</label>-->
 <!--              <input type="text" class="form-control" id="picCategory" name="picCategory" value="{{$picture->picCategoryId}}" />-->
 <!--            </div>-->
-
+              <div class="mb-3 col-md-12">
+                  <label for="user_id" class="form-label">会员id</label>
+                  <input type="text" class="form-control" id="user_id" name="user_id" value="1" />
+              </div>
+              <div class="mb-3 col-md-12">
+                  <label for="device_type" class="form-label">平台id（暂无具体含义）</label>
+                  <input type="text" class="form-control" id="device_type" name="device_type" value="1" />
+              </div>
+              <div class="mb-3 col-md-12">
+                  <label for="pic_category_id" class="form-label">图片分类id</label>
+                  <input type="number" class="form-control" id="pic_category_id" name="pic_category_id" value="" />
+              </div>
+              <div class="mb-3 col-md-12">
+                  <label for="item_count" class="form-label">图片数量</label>
+                  <input type="number" class="form-control" id="item_count" name="item_count" value="1" />
+              </div>
             <div class="mb-3 col-md-12">
               <button type="submit" class="btn btn-sm btn-primary ajax-post" target-form="add-form">保 存</button>
               <button type="reset" class="btn btn-sm btn-default">重 置</button>

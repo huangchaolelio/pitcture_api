@@ -50,7 +50,8 @@
         <form id="piclist" method="post" action="">
           <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}" />
           <div class="card-btns mb-2-5">
-            <a class="btn btn-sm btn-primary me-1" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
+<!--            <a class="btn btn-sm btn-primary me-1" href="#!"><i class="mdi mdi-plus"></i> 新增</a>-->
+            <a class="btn btn-sm btn-primary me-1" data-bs-toggle="modal" data-bs-target="#myModal" onclick="addInfo();"><i class="mdi mdi-plus"></i> 新增</a>
             <a class="btn btn-sm btn-success me-1" onclick="qiyong();"><i class="mdi mdi-check"></i> 启用</a>
             <a class="btn btn-sm btn-warning me-1" onclick="jinyong();"><i class="mdi mdi-block-helper"></i> 禁用</a>
             <a class="btn btn-sm btn-danger" onclick="confirm_Ids();"><i class="mdi mdi-window-close"></i> 删除</a>
@@ -149,12 +150,42 @@
         <h1 class="modal-title fs-5" id="myModalLabel">图辑</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" style="height:500px;">
-        <iframe id="iframe" width="100%" height="100%" frameborder="0"></iframe>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">关闭</button>
-      </div>
+        <div class="modal-body">
+            <form id="sub_form">
+                <div class="card-body">
+                    <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}" />
+                    <input type="hidden" id="data_id" name="data_id" value="" />
+                    <div class="mb-3 col-md-12">
+                        <label for="title" class="form-label">*图辑名称</label>
+                        <input type="text" class="form-control" id="title" name="title" value="" placeholder="输入图辑名称" />
+                    </div>
+                    <div class="mb-3 col-md-12">
+                        <label for="describe" class="form-label">简介</label>
+                        <input type="text" class="form-control" id="describe" name="describe" value="" />
+                    </div>
+                    <div class="mb-3 col-md-12">
+                        <label for="user_id" class="form-label">会员id</label>
+                        <input type="text" class="form-control" id="user_id" name="user_id" value="1" />
+                    </div>
+                    <div class="mb-3 col-md-12">
+                        <label for="device_type" class="form-label">平台id（暂无具体含义）</label>
+                        <input type="text" class="form-control" id="device_type" name="device_type" value="1" />
+                    </div>
+                    <div class="mb-3 col-md-12">
+                        <label for="pic_category_id" class="form-label">图片分类id</label>
+                        <input type="number" class="form-control" id="pic_category_id" name="pic_category_id" value="" />
+                    </div>
+                    <div class="mb-3 col-md-12">
+                        <label for="item_count" class="form-label">图片数量</label>
+                        <input type="number" class="form-control" id="item_count" name="item_count" value="1" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-primary ajax-post sub_type" target-form="add-form" onclick="add_or_update()">提 交</button>
+            <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">关闭</button>
+        </div>
     </div>
   </div>
 </div>
@@ -168,6 +199,78 @@
 <script type="text/javascript" src="{{asset('lightyearadmin/js/main.min.js')}}"></script>
 
 <script type="text/javascript">
+    // 新增 modal
+    function addInfo()
+    {
+        $('.modal-title').text("新增图辑");
+        //重置表单
+        $('#sub_form')[0].reset();
+        // 设置data_id 为空
+        $('#myModal #data_id').val('');
+    }
+    // 新增/修改后提交
+    function add_or_update()
+    {
+        let data_id = $('#data_id').val();
+        // console.log(data_id);
+        let title = $('#title').val();
+        // let describe = $('#describe').val();
+        // let user_id = $('#user_id').val();
+        // let device_type = $('#device_type').val();
+        let pic_category_id = $('#pic_category_id').val();
+        let item_count = $('#item_count').val();
+        if ($.trim(title) == '') {
+            $.alert({
+                title: '提示',
+                icon: 'mdi mdi-alert',
+                type: 'orange',
+                content: '图辑名称不能为空',
+            });
+            return false;
+        }
+        else if ($.trim(pic_category_id) == '' || $.trim(item_count) == '') {
+            $.alert({
+                title: '提示',
+                icon: 'mdi mdi-alert',
+                type: 'orange',
+                content: '图辑分类/数量不能为空',
+            });
+            return false;
+        }
+
+        if(data_id !== '') {
+            // console.log('修改');
+            $.ajax({
+                type: "POST",
+                url: "{{url('admin/update_picture')}}",
+                dataType: "json",
+                data: $('#sub_form').serialize(),
+                success: function (res) {
+                    // console.log(res);
+                    // 关闭模态框并清除框内数据，否则下次打开还是上次的数据
+                    $("#sub_form")[0].reset();
+                    $('#myModal').modal('hide');
+                    location.reload();
+                }
+            })
+        } else {
+            // console.log('增加');
+            $.ajax({
+                type: "POST",
+                url: "{{url('admin/add_picture')}}",
+                dataType: "json",
+                data: $('#sub_form').serialize(),
+                success: function (res) {
+                    // console.log(res);
+                    // 关闭模态框并清除框内数据，否则下次打开还是上次的数据
+                    $("#sub_form")[0].reset();
+                    $('#myModal').modal('hide');
+                    location.reload();
+                }
+            })
+        }
+    }
+
   function qiyong(){
     $isbool = $("input[id='ids-1']").is(":checked");
     if(!$isbool) {

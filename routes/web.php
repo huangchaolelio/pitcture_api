@@ -106,6 +106,12 @@ Route::group(['prefix' => 'admin', 'middleware' =>'adminLogin'], function () {
     // 保存小程序设置
     Route::post('wechat_app', [App\Http\Controllers\Admin\WechatAppController::class, 'save_wechat_app']);
 
+    // 新增图辑分类
+    Route::post('add_picture', [App\Http\Controllers\Admin\PictureController::class, 'add_picture']);
+
+    // 编辑更新图辑
+    Route::post('update_picture', [App\Http\Controllers\Admin\PictureController::class, 'update_picture']);
+
     // 图辑列表
     Route::get('picture_list', [App\Http\Controllers\Admin\PictureController::class, 'picture_list']);
 
