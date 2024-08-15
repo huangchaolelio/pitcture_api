@@ -42,8 +42,8 @@ class AdminController extends Controller
         }
 
         // 验证密码是否正确
-//        if (!Hash::check($password, $adminuser->password))
-        if(!$adminpwd)
+        if (!Hash::check($password, $adminuser->password))
+//        if(!$adminpwd)
         {
             return ['code' => 0, 'msg' => '密码错误'];
         }
