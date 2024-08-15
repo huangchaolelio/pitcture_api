@@ -56,6 +56,32 @@ class PictureItemController extends Controller
         return redirect('admin/picture_item_list');
     }
 
+    // 编辑图片图片（picture_id/url）
+    public function editPictureItem(Request $request)
+    {
+        $itemid = $request->itemid;
+
+        $pictureItem = PictureItem::find($itemid);
+
+        return view('admin/edit_picture_item', ['picture_item' => $pictureItem]);
+    }
+
+    // 保存图片图片（picture_id/url）
+    public function savePictureItem(Request $request)
+    {
+        $id = $request->id;
+
+        $picture_item = PictureItem::find($id);
+
+        $picture_item->picture_id = $request->picture_id;
+        $picture_item->url = $request->url;
+        $picture_item->updated_time = time();
+
+        $picture_item->save();
+//         return ['code' => 1, 'msg' =>'保存成功'];
+        return redirect('admin/picture_list');
+    }
+
     // 图片批量审核通过
     public function picItemShowIds(Request $request)
     {
@@ -103,8 +129,8 @@ class PictureItemController extends Controller
                     $bucketManager = new \Qiniu\Storage\BucketManager($auth, $config);
 
                     // 获取url字符串截取路径文件名
-                    preg_match('/\/([^\/]+\.[a-z]+)[^\/]*$/', $picitem->url, $match); 
-                    $key = $match[1]; 
+                    preg_match('/\/([^\/]+\.[a-z]+)[^\/]*$/', $picitem->url, $match);
+                    $key = $match[1];
 
                     $err = $bucketManager->delete($bucket, $key);
 
@@ -116,7 +142,7 @@ class PictureItemController extends Controller
                     // 删除图片数据表记录
                     $picitem->delete();
                 }
-                
+
             }
         }
 

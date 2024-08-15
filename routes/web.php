@@ -160,6 +160,12 @@ Route::group(['prefix' => 'admin', 'middleware' =>'adminLogin'], function () {
     // 显示对应图辑里的图片列表
     Route::get('pic_item_id', [App\Http\Controllers\Admin\PictureItemController::class, 'picItemId']);
 
+    // 编辑图辑的图片
+    Route::get('edit_picture_item', [App\Http\Controllers\Admin\PictureItemController::class, 'editPictureItem']);
+
+    // 保存图辑的图片
+    Route::post('save_picture_item', [App\Http\Controllers\Admin\PictureItemController::class, 'savePictureItem']);
+
     // 审核用户是否可以正常登录
     Route::get('user_verify', [App\Http\Controllers\Admin\UsersController::class, 'userVerify']);
 

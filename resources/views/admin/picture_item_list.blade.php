@@ -17,19 +17,19 @@
 <link rel="stylesheet" type="text/css" href="{{asset('lightyearadmin/js/jquery-confirm/jquery-confirm.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('lightyearadmin/css/style.min.css')}}">
 </head>
-  
+
 <body>
 <div class="container-fluid">
-  
+
   <div class="row">
-    
+
     <div class="col-lg-12">
       <div class="card">
         <header class="card-header"><div class="card-title">图片列表</div></header>
         <div class="card-body">
           <div class="card-search mb-2-5">
             <form class="search-form" method="get" action="#!" role="form">
-              
+
               <div class="row">
                 <div class="col-md-4">
                   <div class="row">
@@ -44,7 +44,7 @@
                   <button type="reset" class="btn btn-sm btn-default">重置</button>
                 </div>
               </div>
-              
+
             </form>
           </div>
 
@@ -72,7 +72,7 @@
                   <th>图片</th>
                   <th>下载次数</th>
                   <th>收藏次数</th>
-                  <th>是否上架</th>                  
+                  <th>是否上架</th>
                   <th>oss_tag</th>
                   <th>创建时间</th>
                   <th>操作</th>
@@ -95,7 +95,7 @@
                   <td>{{$pictureitem->download}}</td>
                   <td>{{$pictureitem->collect}}</td>
                   <td>
-                    <a href="{{url('admin/picitem_show?itemid=' . $pictureitem->id)}}"> 
+                    <a href="{{url('admin/picitem_show?itemid=' . $pictureitem->id)}}">
                       @if($pictureitem->is_show == 1)
                         <span class="badge bg-success">上架</span>
                       @endif
@@ -108,7 +108,8 @@
                   <td>{{date('Y-m-d H:i', $pictureitem->created_time)}}</td>
                   <td>
                     <div class="btn-group btn-group-sm">
-                      <a class="btn btn-default" href="#!" data-bs-toggle="tooltip" title="编辑"><i class="mdi mdi-pencil"></i></a>
+                      <!--<a class="btn btn-default" href="#!" data-bs-toggle="tooltip" title="编辑"><i class="mdi mdi-pencil"></i></a>-->
+                      <a href="#!" class="btn btn-default js-create-tab" data-bs-toggle="tooltip" title="编辑图辑" data-title="编辑" data-url="{{url('admin/edit_picture_item?itemid=' . $pictureitem->id)}}"><i class="mdi mdi-pencil"></i></a>
                       <a class="btn btn-default" data-bs-toggle="tooltip" title="删除" onclick="confirm_Id([{{$pictureitem->id}}])"><i class="mdi mdi-window-close"></i></a>
                     </div>
                   </td>
@@ -123,9 +124,9 @@
         </div>
       </div>
     </div>
-        
+
   </div>
-  
+
 </div>
 <script type="text/javascript" src="{{asset('lightyearadmin/js/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('lightyearadmin/js/popper.min.js')}}"></script>
@@ -135,7 +136,7 @@
 <script type="text/javascript" src="{{asset('lightyearadmin/js/main.min.js')}}"></script>
 
 <script type="text/javascript">
-  function qiyong(){    
+  function qiyong(){
     $isbool = $("input[id='ids-1']").is(":checked");
     if(!$isbool) {
       $.alert('请选中要操作的记录');
@@ -148,16 +149,16 @@
       type: 'post',
       dataType: 'json',
       data: formdata,
-      // headers: { 
+      // headers: {
       //     "Authorization":"Bearer " + $("#_token").val(),
       //     'Content-Type': 'application/x-www-form-urlencoded'
-      // },                
+      // },
       success: function(res){
         // alert(res.msg);
         location.reload();
       },
       error: function(e) {
-        alert(JSON.stringify(e)); 
+        alert(JSON.stringify(e));
       }
     });
   }
@@ -175,16 +176,16 @@
       type: 'post',
       dataType: 'json',
       data: formdata,
-      // headers: { 
+      // headers: {
       //     "Authorization":"Bearer " + $("#_token").val(),
       //     'Content-Type': 'application/x-www-form-urlencoded'
-      // },                
+      // },
       success: function(res){
         // alert(res.msg);
         location.reload();
       },
       error: function(e) {
-        alert(JSON.stringify(e)); 
+        alert(JSON.stringify(e));
       }
     });
   }
@@ -197,16 +198,16 @@
       type: 'post',
       dataType: 'json',
       data: formdata,
-      // headers: { 
+      // headers: {
       //     "Authorization":"Bearer " + $("#_token").val(),
       //     'Content-Type': 'application/x-www-form-urlencoded'
-      // },                
+      // },
       success: function(res){
         // alert(res.msg);
         location.reload();
       },
       error: function(e) {
-        alert(JSON.stringify(e)); 
+        alert(JSON.stringify(e));
       }
     });
   }
@@ -220,13 +221,13 @@
       data: {
         'ids': id,
         '_token': '{{csrf_token()}}'
-      },             
+      },
       success: function(res){
         // alert(res.msg);
         location.reload();
       },
       error: function(e) {
-        alert(JSON.stringify(e)); 
+        alert(JSON.stringify(e));
       }
     });
   }
@@ -247,7 +248,7 @@
                   iddel(id); // 删除指定id的图片
                 }
             },
-            '取消': function() {                          
+            '取消': function() {
             },
         }
     });
@@ -259,7 +260,7 @@
       $.alert('请选中要操作的记录');
       return;
     }
-    
+
     $.confirm({
         title: '是否确认删除',
         content: '批量删除选中的图辑，将删除图辑下的所有图片！！<br/>是否继续。',
@@ -275,7 +276,7 @@
                   idsdel(); // 批量删除图片
                 }
             },
-            '取消': function() {                          
+            '取消': function() {
             },
         }
     });
