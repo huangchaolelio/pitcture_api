@@ -34,6 +34,28 @@ class PictureItemController extends Controller
         ));
     }
 
+    // 图片搜索
+    public function pictureItemSearch(Request $request)
+    {
+//        $ids = $request->pic_cat_id;
+        $picture_id = $request->picture_id;
+        $pictureitems = PictureItem::where('picture_id',$picture_id);
+        return view('admin.picture_item_list',array(
+            'pictureitems' => $pictureitems
+        ));
+    }
+
+    // 显示对应图辑里的图片列表
+//    public function picItemId(Request $request)
+//    {
+//        $picture_id = $request->picture_id;
+//
+//        $pictureItem = PictureItem::where('picture_id',$picture_id)->get();
+//        // return $pictureItem;
+//
+//        return view('admin/pic_item_id', array('pictureItem' => $pictureItem));
+//    }
+
     // 审核是否显示图片（显示或隐藏）
     public function picItemShow(Request $request)
     {

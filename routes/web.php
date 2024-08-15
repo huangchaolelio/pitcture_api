@@ -160,6 +160,9 @@ Route::group(['prefix' => 'admin', 'middleware' =>'adminLogin'], function () {
     // 图片批量审核隐藏
     Route::post('picitem_hiden_ids', [App\Http\Controllers\Admin\PictureItemController::class, 'pictureHidenIds']);
 
+    // 图片批量审核隐藏
+    Route::get('picitem_search', [App\Http\Controllers\Admin\PictureItemController::class, 'pictureItemSearch']);
+
     // 图片批量删除
     Route::post('picitem_del_ids', [App\Http\Controllers\Admin\PictureItemController::class, 'picItemDelIds']);
 

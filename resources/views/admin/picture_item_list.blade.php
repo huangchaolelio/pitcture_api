@@ -28,19 +28,24 @@
         <header class="card-header"><div class="card-title">图片列表</div></header>
         <div class="card-body">
           <div class="card-search mb-2-5">
-            <form class="search-form" method="get" action="#!" role="form">
-
+            <form id="search" class="search-form" method="get" action="" role="form">
               <div class="row">
                 <div class="col-md-4">
                   <div class="row">
-                    <label class="col-sm-4 col-form-label"><span class="text-danger">*</span> 任务名称</label>
+                    <label class="col-sm-4 col-form-label"><span class="text-danger">*</span> 图片分类id</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control pull-left" name="name" value="" placeholder="请输入任务名称" />
+                      <input id="pic_cat_id" type="text" class="form-control pull-left" name="pic_cat_id" value="" placeholder="请输入图片分类id名称" />
                     </div>
                   </div>
+                    <div class="row">
+                        <label class="col-sm-4 col-form-label"><span class="text-danger">*</span>图辑id名称</label>
+                        <div class="col-sm-8">
+                            <input id="picture_id" type="text" class="form-control pull-left" name="picture_id" value="" placeholder="请输入图辑名称" />
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-4">
-                  <button type="submit" class="btn btn-sm btn-primary me-1">搜索</button>
+                  <button class="btn btn-sm btn-primary me-1" onclick="search();">搜索</button>  <!--type="submit" -->
                   <button type="reset" class="btn btn-sm btn-default">重置</button>
                 </div>
               </div>
@@ -136,6 +141,26 @@
 <script type="text/javascript" src="{{asset('lightyearadmin/js/main.min.js')}}"></script>
 
 <script type="text/javascript">
+  function search() {
+      // alert($('#pic_cat_id').val());
+      // alert($('#pic_id').val());
+
+      // let formdata = $('#search').serialize();
+      // $.ajax({
+      //     url: "{{url('admin/picitem_search')}}",
+      //     type: 'get',
+      //     dataType: 'json',
+      //     data: formdata,
+      //     success: function(res){
+      //         // alert("test");
+      //         location.reload();
+      //     },
+      //     error: function(e) {
+      //         alert(JSON.stringify(e));
+      //     }
+      // });
+  }
+
   function qiyong(){
     $isbool = $("input[id='ids-1']").is(":checked");
     if(!$isbool) {

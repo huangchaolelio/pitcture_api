@@ -59,7 +59,7 @@
       <span class="mdi mdi-lock" aria-hidden="true"></span>
       <input type="password" class="form-control" id="password" name="password" placeholder="密码" required>
     </div>
-    
+
     <div class="mb-3 has-feedback row">
       <div class="col-7">
         <span class="mdi mdi-check-all form-control-feedback" aria-hidden="true"></span>
@@ -74,8 +74,8 @@
       <button class="btn btn-primary" type="submit">立即登录</button>
     </div>
   </form>
-  
-  <p class="text-center text-muted mb-0">Copyright © 2023 <a target="_blank" href="https://www.mdoo.cn">魔豆网</a>. All right reserved</p>
+
+  <p class="text-center text-muted mb-0">Copyright © 2023 <a target="_blank" href="#">爱看网</a>. All right reserved</p>
 </div>
 
 <script type="text/javascript" src="{{asset('lightyearadmin/js/jquery.min.js')}}"></script>
@@ -110,9 +110,9 @@
             $(this).addClass('was-validated');
             return false;
         }
-        
+
         var $data  = $(this).serialize();
-        
+
         $.post($(this).attr('action'), $data, function(res) {
             if (res.code) {
             // 这里没有后端地址，就直接假设成功
