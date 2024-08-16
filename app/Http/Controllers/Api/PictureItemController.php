@@ -67,7 +67,7 @@ class PictureItemController extends Controller
         }
 
         // 获取url字符串截取路径文件名
-        preg_match('/\/([^\/]+\.[a-z]+)[^\/]*$/', $item_url, $match); 
+        preg_match('/\/([^\/]+\.[a-z]+)[^\/]*$/', $item_url, $match);
         $fileName = $match[1];
 
         $url = $item_url; // 远程图片的URL地址
@@ -81,7 +81,7 @@ class PictureItemController extends Controller
     // 图片列表
     public function itemlist()
     {
-        $itemlists = PictureItem::inRandomOrder()->take(300)->get();
+        $itemlists = PictureItem::inRandomOrder()->take(50)->get();
 
         foreach($itemlists as $itemlist)
         {
@@ -89,5 +89,5 @@ class PictureItemController extends Controller
         }
         return $itemlists;
     }
-    
+
 }
