@@ -14,7 +14,8 @@ class PictureController extends Controller
     // 获得图辑列表
     public function main_picture_list()
     {
-        $picturelists = Picture::where('is_show',1)->orderByDesc('created_time')->paginate(20);
+//        $picturelists = Picture::where('is_show',1)->orderByDesc('created_time')->paginate(20);
+        $picturelists = Picture::where('is_show',1)->inRandomOrder()->paginate(20);
 
         foreach($picturelists as $picturelist)
         {
@@ -44,7 +45,7 @@ class PictureController extends Controller
 
             return $pictures;
 
-        } 
+        }
 
         // 获得对应的分类的数据
         $pictures = Picture::where('is_show', 1)->where('pic_category_id', $picture_category_id)->orderByDesc('created_time')->paginate(20);
@@ -73,7 +74,7 @@ class PictureController extends Controller
             $picturelist['url'] = PictureItem::where('picture_id', $picturelist->id)->first()->url;
         }
 
-        return $picturelists;        
+        return $picturelists;
     }
 
     // 获得分享的标题内容
