@@ -73,6 +73,7 @@
                   <th>下载需积分</th>
                   <th>平台</th>
                   <th>图片分类</th>
+                  <th>图片item</th>
                   <th>图片数量</th>
                   <th>下载次数</th>
                   <th>收藏数量</th>
@@ -105,6 +106,7 @@
                   <td>{{$picture->score}}</td>
                   <td>{{$picture->device_type}}</td>
                   <td>{{isset($picture->picCategory->title)? $picture->picCategory->title : ''}}</td>
+                  <td><img src="{{$picture->item->url}}" style="width: 100px;"></td>
                   <td>{{$picture->item_count}}</td>
                   <td>{{$picture->download}}</td>
                   <td>{{$picture->collect}}</td>

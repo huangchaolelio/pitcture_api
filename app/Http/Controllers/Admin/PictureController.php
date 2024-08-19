@@ -31,6 +31,8 @@ class PictureController extends Controller
 
             // 对应用户
             $picture['user'] = Users::where('id', $picture->user_id)->first();
+
+            $picture['item'] = PictureItem::where('picture_id', $picture->id)->first();
         }
 
         return view('admin.picture_list', array(
