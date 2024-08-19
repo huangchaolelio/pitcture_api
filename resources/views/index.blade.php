@@ -70,7 +70,7 @@
                         <div class="caption text-center">
                             <!-- <h8>爱看图</h8> -->
                             <p>
-                                <small>爱看图</small>
+                                <small>{{$pictureItem->picture->title}}</small>
                             </p>
                         </div>
                     </div>
@@ -88,3 +88,30 @@
     </div>
 </body>
 </html>
+<script type="text/javascript" src="{{asset('lightyearadmin/js/jquery.min.js')}}"></script>
+<script>
+    $(".img-responsive.img-rounded").click(function() {
+        var modal = $("<div></div>").css({
+            "position": "fixed",
+            "top": "0",
+            "left": "0",
+            "width": "100%",
+            "height": "100%",
+            "background-color": "rgba(0,0,0,0.5)",
+            "display": "flex",
+            "justify-content": "center",
+            "align-items": "center"
+
+        });
+        $("body").append(modal);  var modalImg = $("<img>").attr("src", this.src).css({
+            "display": "block",
+            "margin": "auto",
+            "max-width": "60%",
+            "max-height": "60%"
+        });
+        modal.append(modalImg);  modal.click(function() {
+            $(this).remove();
+        });
+    });
+
+</script>
