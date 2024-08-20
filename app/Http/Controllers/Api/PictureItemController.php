@@ -68,14 +68,24 @@ class PictureItemController extends Controller
 
         // 获取url字符串截取路径文件名
         preg_match('/\/([^\/]+\.[a-z]+)[^\/]*$/', $item_url, $match);
-        $fileName = $match[1];
+        if(sizeof($match)==0) {
+            $fileName = $pic_item_id . '_itemid.gif';
+        } else {
+            $fileName = $match[1];
+        }
 
         $url = $item_url; // 远程图片的URL地址
         $image = file_get_contents($url); // 通过URL获取图片内容
-        $filePath = $path . '/' . mt_rand(1, 500) . $fileName; // 保存图片的本地路径
-        file_put_contents($filePath, $image); // 将图片内容保存为本地文件
+//        $filePath = $path . '/' . mt_rand(1, 500) . $fileName; // 保存图片的本地路径
+        $filePath = $path . '/' . $fileName; // 保存图片的本地路径
+        if(!file_exists($filePath)) {
+            file_put_contents($filePath, $image); // 将图片内容保存为本地文件
+        }
         // 返回图片下载地址
-        return 'https://picture-api.mdoo.cn/' . $filePath;
+//        return 'https://picture-api.mdoo.cn/' . $filePath;
+//        return 'http://8.137.34.97/' . $filePath;
+        return $item_url;
+
     }
 
     // 图片列表
