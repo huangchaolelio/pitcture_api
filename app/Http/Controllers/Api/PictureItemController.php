@@ -51,6 +51,7 @@ class PictureItemController extends Controller
         // 图片地址
         $item_url = $pic_item->url;
 
+//        return  $item_url;
         /**
         * 由于小程序下载必须是https地址，七牛云https收费，使用了http不能直接下载，
         * 因此先把图片下载到服务器上再在小程中下载。功能图下。
@@ -83,8 +84,8 @@ class PictureItemController extends Controller
         }
         // 返回图片下载地址
 //        return 'https://picture-api.mdoo.cn/' . $filePath;
-//        return 'http://8.137.34.97/' . $filePath;
-        return $item_url;
+        return 'https://funpic.fun/' . $filePath;
+//        return $item_url;
 
     }
 
