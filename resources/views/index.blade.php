@@ -83,7 +83,7 @@
 
     <div class="container-xxl">
         <div class="row justify-content-center text-center" style="padding:20px 0;">
-            <p style="font-size: 12px;">天天爱看网提供技术支持 <a href="#" target="_blank"></a></p>
+            <p style="font-size: 12px;">天天爱看网提供技术支持 <a href="https://funpic.fun/" target="_blank"></a></p>
         </div>
     </div>
 </body>
