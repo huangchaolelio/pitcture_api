@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-<meta name="keywords" content="手机壁纸，精美图片，美女，服饰，穿搭，居家，美食，宠物，旅游，游戏">
+<meta name="keywords" content="搞笑图片，手机壁纸，搞笑，影视，体育，美女，新闻，音乐，美食，宠物，旅游，游戏">
 <meta name="description" content="海量高清手机壁纸、苹果安卓壁纸、手机主题，动态壁纸；免费一键去水印，高清无痕。">
-<title>爱看图 - 手机壁纸，精美图片</title>
+<title>爱看图 - 搞笑图片，手机壁纸</title>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-touch-fullscreen" content="yes">

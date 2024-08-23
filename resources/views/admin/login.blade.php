@@ -75,7 +75,7 @@
     </div>
   </form>
 
-  <p class="text-center text-muted mb-0">Copyright © 2023 <a target="_blank" href="#">爱看网</a>. All right reserved</p>
+  <p class="text-center text-muted mb-0">Copyright © 2024 <a target="_blank" href="https://funpic.fun/">爱看网</a>. All right reserved</p>
 </div>
 
 <script type="text/javascript" src="{{asset('lightyearadmin/js/jquery.min.js')}}"></script>
