@@ -18,7 +18,7 @@ use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
 
 class PublishPicController extends Controller
-{   
+{
     // 前端用户发布图片<tn-image-upload>组件用到的上传路由
     public function picture_upload(Request $request)
     {
@@ -52,16 +52,17 @@ class PublishPicController extends Controller
     }
 
     /**
-     * 
+     *
      * 前端用户发布的内容信息
-     * 
+     *
      * **/
     public function publish_pictures(Request $request)
     {
         $picture = new Picture();
         $picture->user_id = $request->input('userid'); // 用戶的id
         // $picture->item_count = $request->intpu('pic_count'); // 图片数量
-        $picture->title = $request->input('pic_title'); // 标题        
+        $picture->title = $request->input('pic_title'); // 标题
+        $picture->describe = $request->input('pic_desc'); // 标题
         $picture->device_type = $request->input('pic_device'); // 图片可以使用的平台类别
         $picture->item_count = $request->input('pic_count'); // 上传图片数量
         $picture->score = $request->input('pic_score');  // 积分
@@ -76,7 +77,7 @@ class PublishPicController extends Controller
         {
             $pictureDescribe = new PictureDescribe();
             $pictureDescribe->picture_id = $picture->id;
-            $pictureDescribe->describe = $desc; // 描述 
+            $pictureDescribe->describe = $desc; // 描述
             $pictureDescribe->created_time = time();
             $pictureDescribe->save();
         }
@@ -88,12 +89,21 @@ class PublishPicController extends Controller
 
         $files = json_decode($request->input('pic_list'));  // 取得全部上传的图片文件
 
-        // 依次保存图片路径到数据库中 
+        // 依次保存图片路径到数据库中
         foreach($files as $file)
         {
             if($mark == 'localhost') {
                 // 上传到本地服务器
-                $this->local();
+//                $this->local();//报错没有local()方法
+
+//                $bucket = $oss->bucket; // 目录,上传路径
+//                move_uploaded_file($file,$bucket);
+                // 上传文件名
+//                $newFileName = basename($file);
+                $domain = $oss->domain;
+
+                $filePath = $domain . $file;
+
             }
 
             if($mark == 'qiniu') {
@@ -103,7 +113,7 @@ class PublishPicController extends Controller
                 // 用于签名的公钥和私钥
                 $accessKey = $oss->accesskey;
                 $secretKey = $oss->secretkey;
-                $bucket = $oss->bucket; // 目录           
+                $bucket = $oss->bucket; // 目录
                 $qiniu_url = $oss->domain; // 七牛的外链域名
 
                 // 初始化签权对象
@@ -121,7 +131,7 @@ class PublishPicController extends Controller
                 // 文件上传
                 list($ret, $err) = $uploadManager->putFile($token, $newFileName, $file);
 
-                // $ret 返回格式 [{"hash":"FitYPv-Q2uGG51NXQj0F4IN6tfHb","key":"624bb15ed8930f5add49f90b88e969d8.jpg"}]    
+                // $ret 返回格式 [{"hash":"FitYPv-Q2uGG51NXQj0F4IN6tfHb","key":"624bb15ed8930f5add49f90b88e969d8.jpg"}]
 
                 $filePath = $qiniu_url . $ret['key'] . '?token=' . $token;
 
@@ -132,7 +142,7 @@ class PublishPicController extends Controller
             $pictureitem = new PictureItem();
             $pictureitem->picture_id = $picture->id;
             $pictureitem->url = $filePath;
-            $pictureitem->is_show = 1; // 0为不显示，1为显示
+            $pictureitem->is_show = 0; // 0为不显示，1为显示
             $pictureitem->oss_tag = $oss_tag;
             $pictureitem->created_time = time();
             $pictureitem->updated_time = time();
@@ -141,6 +151,6 @@ class PublishPicController extends Controller
         }
 
         // 上传成功
-        return ['code' => 0, 'msg' => '上传成功，等待审核。']; 
+        return ['code' => 0, 'msg' => '上传成功，等待审核。'];
     }
 }
