@@ -12,10 +12,16 @@ use App\Models\Users;
 class PictureController extends Controller
 {
     // 获得图辑列表
-    public function main_picture_list()
+    public function main_picture_list(Request $request)
     {
 //        $picturelists = Picture::where('is_show',1)->orderByDesc('created_time')->paginate(20);
-        $picturelists = Picture::where('is_show',1)->inRandomOrder()->paginate(20);
+        $picture_scope = $request->input('type');
+        if($picture_scope == 1) {// 最新
+            $timestamp = strtotime("-90 days");
+            $picturelists = Picture::where('is_show',1)->where('created_time', '>',$timestamp)->orderByDesc('created_time')->paginate(20);
+        } else { //推荐
+            $picturelists = Picture::where('is_show',1)->inRandomOrder()->paginate(20);
+        }
 
         foreach($picturelists as $picturelist)
         {
