@@ -142,7 +142,7 @@ class PublishPicController extends Controller
             $pictureitem = new PictureItem();
             $pictureitem->picture_id = $picture->id;
             $pictureitem->url = $filePath;
-            $pictureitem->is_show = 0; // 0为不显示，1为显示
+            $pictureitem->is_show = 1; // 0为不显示，1为显示
             $pictureitem->oss_tag = $oss_tag;
             $pictureitem->created_time = time();
             $pictureitem->updated_time = time();
