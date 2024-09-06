@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Library\Response;
+use App\Models\WechatApp;
 
-use App\Models\PictureCategory;
-use App\Models\Users;
 use App\Models\Picture;
 use App\Models\PictureItem;
 use App\Models\PictureDescribe;
@@ -19,6 +18,53 @@ use Qiniu\Storage\UploadManager;
 
 class PublishPicController extends Controller
 {
+
+    /*后端获取token*/
+    public function getWechatToken()
+    {
+
+        // 获得小程序的appid和secret设置
+        $wechatapp = WechatApp::first();
+        $appid = $wechatapp->AppId;
+        $secret = $wechatapp->AppSecret;
+
+        $client = new \GuzzleHttp\Client(); // curl模拟http进行get和post请求的类
+        // 获取 access_token 和用户的 openid
+        $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' . $appid . '&secret=' . $secret;
+        // get请求
+        $res = $client->request('get', $url);
+        // 返回请求的json数据
+        $res = json_decode($res->getBody());
+        $access_token = $res->access_token;
+        return $access_token;
+
+    }
+
+    /*微信图片敏感内容检测*/
+    public function imgSecCheck($filePath,$filename)
+    {
+
+        $token = $this->getWechatToken();
+        $url = "https://api.weixin.qq.com/wxa/img_sec_check?access_token=$token";
+        $client = new \GuzzleHttp\Client(); // curl模拟http进行get和post请求的类
+        $file_resource = fopen($filePath, 'r');
+        $multipart = [
+            [
+                'name'     => 'media',
+                'contents' =>  $file_resource,
+                'filename' => $filename,
+            ]
+        ];
+        $res = $client->request('POST', $url, [
+            'multipart' => $multipart,
+            'headers' => [
+                'Content-Type' => 'multipart/form-data'
+            ]
+        ]);
+        return json_decode($res->getBody(),true);
+
+    }
+
     // 前端用户发布图片<tn-image-upload>组件用到的上传路由
     public function picture_upload(Request $request)
     {
@@ -27,6 +73,13 @@ class PublishPicController extends Controller
 
         // 获取缓存在服务器 tmp 目录下的文件名,（带后缀，如 php8933.tmp）
         $fileTempName = $file->getFilename();
+
+        //图片安全检测
+        $imgCheck = $this->imgSecCheck($file,$fileTempName);
+
+        if($imgCheck['errmsg'] !='ok') {
+            return $imgCheck;
+        }
 
         // 获取上传文件的文件名全名（带扩展名，如 abc.png）
         $fileName = $file->getClientOriginalName();
@@ -45,10 +98,13 @@ class PublishPicController extends Controller
         }
 
         // 将缓存在 tmp 目录下的文件移到某个位置，返回的是这个文件移动过后的路径
+
         $movePath = $file->move($path, $newFileName);
 
+//        return $this->imgSecCheck($movePath,$newFileName);
         // $movePath格式： uploads_tmp\fe88b153d4ab995e20ac59cffcb959a9.jpg
-        return $movePath;
+//        return $movePath;
+        return $imgCheck;
     }
 
     /**
