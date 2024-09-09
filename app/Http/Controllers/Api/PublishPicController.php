@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Users;
 use Illuminate\Http\Request;
 use App\Library\Response;
 use App\Models\WechatApp;
@@ -65,6 +66,24 @@ class PublishPicController extends Controller
 
     }
 
+    /*微信文本敏感内容检测*/
+    public function msgSecCheck($title,$content,$user_id)
+    {
+        $url = 'https://api.weixin.qq.com/wxa/msg_sec_check?access_token=' . $this->getWechatToken();
+        $client = new \GuzzleHttp\Client(); // curl模拟http进行get和post请求的类
+        $openid = Users::where('id', $user_id)->first()->openid;
+        $res = $client->request('POST', $url,[
+            'body' => json_encode([
+                'content' => $content,
+                'title'=>$title,
+                'version' => 2,
+                'openid' => $openid,
+                'scene' => 2
+            ], JSON_UNESCAPED_UNICODE),
+        ]);
+        return json_decode($res->getBody(),true);
+    }
+
     // 前端用户发布图片<tn-image-upload>组件用到的上传路由
     public function picture_upload(Request $request)
     {
@@ -119,94 +138,101 @@ class PublishPicController extends Controller
         // $picture->item_count = $request->intpu('pic_count'); // 图片数量
         $picture->title = $request->input('pic_title'); // 标题
         $picture->describe = $request->input('pic_desc'); // 标题
-        $picture->device_type = $request->input('pic_device'); // 图片可以使用的平台类别
-        $picture->item_count = $request->input('pic_count'); // 上传图片数量
-        $picture->score = $request->input('pic_score');  // 积分
-        $picture->pic_category_id = $request->input('pic_categoryid'); // 图片分类
-        $picture->is_show = 0; // 默认为不显示图片专辑
-        $picture->created_time = time();
-        $picture->updated_time = time();
-        $picture->save();
+        $result = $this->msgSecCheck($picture->title,$picture->describe,$picture->user_id);
+        //内容检测成功
+        if(isset($result['errcode']) && $result['errcode'] == 0 && $result['result']['suggest']=='pass') {
 
-        $desc = $request->input('pic_desc');
-        if($desc != '')
-        {
-            $pictureDescribe = new PictureDescribe();
-            $pictureDescribe->picture_id = $picture->id;
-            $pictureDescribe->describe = $desc; // 描述
-            $pictureDescribe->created_time = time();
-            $pictureDescribe->save();
-        }
+            $picture->device_type = $request->input('pic_device'); // 图片可以使用的平台类别
+            $picture->item_count = $request->input('pic_count'); // 上传图片数量
+            $picture->score = $request->input('pic_score');  // 积分
+            $picture->pic_category_id = $request->input('pic_categoryid'); // 图片分类
+            $picture->is_show = 0; // 默认为不显示图片专辑
+            $picture->created_time = time();
+            $picture->updated_time = time();
+            $picture->save();
 
-        // 图片存储位置
-        $oss = OssConfig::where('status', 1)->first();
-        $mark = $oss->mark;
-        $oss_tag = $oss->tag;
-
-        $files = json_decode($request->input('pic_list'));  // 取得全部上传的图片文件
-
-        // 依次保存图片路径到数据库中
-        foreach($files as $file)
-        {
-            if($mark == 'localhost') {
-                // 上传到本地服务器
-//                $this->local();//报错没有local()方法
-
-//                $bucket = $oss->bucket; // 目录,上传路径
-//                move_uploaded_file($file,$bucket);
-                // 上传文件名
-//                $newFileName = basename($file);
-                $domain = $oss->domain;
-
-                $filePath = $domain . $file;
-
+            $desc = $request->input('pic_desc');
+            if ($desc != '') {
+                $pictureDescribe = new PictureDescribe();
+                $pictureDescribe->picture_id = $picture->id;
+                $pictureDescribe->describe = $desc; // 描述
+                $pictureDescribe->created_time = time();
+                $pictureDescribe->save();
             }
 
-            if($mark == 'qiniu') {
-                // 上传到七牛云服务器
-                // $this->qiniu();
+            // 图片存储位置
+            $oss = OssConfig::where('status', 1)->first();
+            $mark = $oss->mark;
+            $oss_tag = $oss->tag;
 
-                // 用于签名的公钥和私钥
-                $accessKey = $oss->accesskey;
-                $secretKey = $oss->secretkey;
-                $bucket = $oss->bucket; // 目录
-                $qiniu_url = $oss->domain; // 七牛的外链域名
+            $files = json_decode($request->input('pic_list'));  // 取得全部上传的图片文件
 
-                // 初始化签权对象
-                $auth = new Auth($accessKey, $secretKey);
+            // 依次保存图片路径到数据库中
+            foreach ($files as $file) {
+                if ($mark == 'localhost') {
+                    // 上传到本地服务器
+                    //                $this->local();//报错没有local()方法
 
-                // 生成上传Token
-                $token = $auth->uploadToken($bucket);
+                    //                $bucket = $oss->bucket; // 目录,上传路径
+                    //                move_uploaded_file($file,$bucket);
+                    // 上传文件名
+                    //                $newFileName = basename($file);
+                    $domain = $oss->domain;
 
-                // 构建 UploadManager 对象
-                $uploadManager = new UploadManager();
+                    $filePath = $domain . $file;
 
-                // 上传文件名
-                $newFileName = basename($file);
+                }
 
-                // 文件上传
-                list($ret, $err) = $uploadManager->putFile($token, $newFileName, $file);
+                if ($mark == 'qiniu') {
+                    // 上传到七牛云服务器
+                    // $this->qiniu();
 
-                // $ret 返回格式 [{"hash":"FitYPv-Q2uGG51NXQj0F4IN6tfHb","key":"624bb15ed8930f5add49f90b88e969d8.jpg"}]
+                    // 用于签名的公钥和私钥
+                    $accessKey = $oss->accesskey;
+                    $secretKey = $oss->secretkey;
+                    $bucket = $oss->bucket; // 目录
+                    $qiniu_url = $oss->domain; // 七牛的外链域名
 
-                $filePath = $qiniu_url . $ret['key'] . '?token=' . $token;
+                    // 初始化签权对象
+                    $auth = new Auth($accessKey, $secretKey);
 
-                // 删除目录下的文件 uploads_tmp
-                unlink($file);
+                    // 生成上传Token
+                    $token = $auth->uploadToken($bucket);
+
+                    // 构建 UploadManager 对象
+                    $uploadManager = new UploadManager();
+
+                    // 上传文件名
+                    $newFileName = basename($file);
+
+                    // 文件上传
+                    list($ret, $err) = $uploadManager->putFile($token, $newFileName, $file);
+
+                    // $ret 返回格式 [{"hash":"FitYPv-Q2uGG51NXQj0F4IN6tfHb","key":"624bb15ed8930f5add49f90b88e969d8.jpg"}]
+
+                    $filePath = $qiniu_url . $ret['key'] . '?token=' . $token;
+
+                    // 删除目录下的文件 uploads_tmp
+                    unlink($file);
+                }
+
+                $pictureitem = new PictureItem();
+                $pictureitem->picture_id = $picture->id;
+                $pictureitem->url = $filePath;
+                $pictureitem->is_show = 1; // 0为不显示，1为显示
+                $pictureitem->oss_tag = $oss_tag;
+                $pictureitem->created_time = time();
+                $pictureitem->updated_time = time();
+
+                $pictureitem->save();
             }
 
-            $pictureitem = new PictureItem();
-            $pictureitem->picture_id = $picture->id;
-            $pictureitem->url = $filePath;
-            $pictureitem->is_show = 1; // 0为不显示，1为显示
-            $pictureitem->oss_tag = $oss_tag;
-            $pictureitem->created_time = time();
-            $pictureitem->updated_time = time();
-
-            $pictureitem->save();
+            // 上传成功
+            return ['code' => 0, 'msg' => '上传成功，等待审核。'];
+        } elseif (isset($result['errcode']) && $result['errcode'] == 0 && $result['result']['suggest']!='pass'){
+            return ['code' => -1, 'msg' => '标题或描述存在风险，请修改。'];
+        } else {
+            return $result;
         }
-
-        // 上传成功
-        return ['code' => 0, 'msg' => '上传成功，等待审核。'];
     }
 }
