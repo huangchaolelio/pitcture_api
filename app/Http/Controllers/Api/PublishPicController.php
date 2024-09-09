@@ -232,7 +232,7 @@ class PublishPicController extends Controller
         } elseif (isset($result['errcode']) && $result['errcode'] == 0 && $result['result']['suggest']!='pass'){
             return ['code' => -1, 'msg' => '标题或描述存在风险，请修改。'];
         } else {
-            return $result;
+            return ['code' => -1, 'msg' => $result['errmsg']];
         }
     }
 }
