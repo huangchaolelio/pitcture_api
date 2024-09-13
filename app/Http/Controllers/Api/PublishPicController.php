@@ -123,7 +123,8 @@ class PublishPicController extends Controller
 //        return $this->imgSecCheck($movePath,$newFileName);
         // $movePath格式： uploads_tmp\fe88b153d4ab995e20ac59cffcb959a9.jpg
 //        return $movePath;
-        return $imgCheck;
+        //array_push($imgCheck, array("file" => $movePath));
+        return $movePath;
     }
 
     /**
@@ -176,10 +177,10 @@ class PublishPicController extends Controller
                     //                $bucket = $oss->bucket; // 目录,上传路径
                     //                move_uploaded_file($file,$bucket);
                     // 上传文件名
-                    $newFileName = basename($file);
+//                    $newFileName = basename($file);
                     $domain = $oss->domain;
 
-                    $filePath = $domain . $newFileName;
+                    $filePath = $domain . $file;
 
                 }
 
