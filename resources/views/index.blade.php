@@ -93,6 +93,9 @@
     <div class="container-xxl">
         <div class="row justify-content-center text-center" style="padding:20px 0;">
             <p style="font-size: 12px;">天天爱看网提供技术支持 <a href="https://funpic.fun/" target="_blank">www.funpic.fun</a></p>
+            <a href="https://beian.miit.gov.cn/" target="_blank" style="text-decoration:none;" rel="noopener">
+                <span style="color:#939393;font-size:12px;vertical-align:middle;">陕ICP备2024047998号-2</span>
+            </a>
         </div>
     </div>
 </body>
