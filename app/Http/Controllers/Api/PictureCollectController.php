@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\PictureCollect;
 use App\Models\Picture;
 use App\Models\PictureItem;
+use Illuminate\Support\Facades\DB;
 
 class PictureCollectController extends Controller
 {
@@ -36,5 +37,20 @@ class PictureCollectController extends Controller
 
         return ['msg' => "收藏成功"];
    }
-    
+
+   // 查询我的收藏
+    public function userCollect(Request $request)
+    {
+        $user_id = $request->user_id;
+        $myCollect = DB::table('picture_collect')
+            ->join('picture','picture_collect.picture_id', '=', 'picture.id')
+            // ->join('picture_item', 'picture.id', '=', 'picture_item.picture_id')
+            ->select('picture.*')
+            ->where('picture_collect.user_id', '=', $user_id)
+            ->where('picture.is_show', '=', 1)
+          //  ->where('picture_item.is_show', '=', 1)
+            ->get();
+        return $myCollect;
+    }
+
 }

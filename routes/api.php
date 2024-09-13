@@ -34,6 +34,10 @@ Route::get('img/item', [App\Http\Controllers\Api\PictureItemController::class, '
 // 收藏图片专辑
 Route::post('img/collect', [App\Http\Controllers\Api\PictureCollectController::class, 'pictureCollect']);
 
+// 用户收藏图片
+Route::get('img/user_collect', [App\Http\Controllers\Api\PictureCollectController::class, 'userCollect']);
+
+
 // 下载图片
 Route::post('img/download', [App\Http\Controllers\Api\PictureItemController::class, 'pic_item_download']);
 

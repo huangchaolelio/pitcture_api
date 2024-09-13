@@ -14,6 +14,15 @@
 <link rel="stylesheet" type="text/css" href="{{asset('lightyearadmin/css/bootstrap.min.css')}}">
 <!--让IE使用最新的渲染模式，支持CSS3-->
 <meta http-equiv="X-UA-Compatible" content="IE-edge,chrome=1">
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e833a8e2d006a1f7cdc1eb60321e467";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 <!--如果IE版本低于IE9，使浏览器支持HTML5和CSS3-->
 <!--[if lt IE 9]>
 <script src="http://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
