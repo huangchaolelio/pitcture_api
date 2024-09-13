@@ -176,10 +176,10 @@ class PublishPicController extends Controller
                     //                $bucket = $oss->bucket; // 目录,上传路径
                     //                move_uploaded_file($file,$bucket);
                     // 上传文件名
-                    //                $newFileName = basename($file);
+                    $newFileName = basename($file);
                     $domain = $oss->domain;
 
-                    $filePath = $domain . $file;
+                    $filePath = $domain . $newFileName;
 
                 }
 
