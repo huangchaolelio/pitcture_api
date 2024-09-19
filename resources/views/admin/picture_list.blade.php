@@ -106,7 +106,7 @@
                   <td>{{$picture->score}}</td>
                   <td>{{$picture->device_type}}</td>
                   <td>{{isset($picture->picCategory->title)? $picture->picCategory->title : ''}}</td>
-                  <td><img src="{{$picture->item->url}}" style="width: 100px;"></td>
+                  <td><img src="{{$picture->item !=null ? $picture->item->url : '#'}}" style="width: 100px;"></td>
                   <td>{{$picture->item_count}}</td>
                   <td>{{$picture->download}}</td>
                   <td>{{$picture->collect}}</td>
