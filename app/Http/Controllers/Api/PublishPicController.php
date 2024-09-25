@@ -93,13 +93,14 @@ class PublishPicController extends Controller
         // 获取缓存在服务器 tmp 目录下的文件名,（带后缀，如 php8933.tmp）
         $fileTempName = $file->getFilename();
 
-        //图片安全检测
-        $imgCheck = $this->imgSecCheck($file,$fileTempName);
-
-        if($imgCheck['errmsg'] !='ok') {
-            return $imgCheck;
+        $fileSize = filesize($file);
+        if($fileSize < 1024 * 1024) {//小于1M的图片才检测(微信接口支持1M的)，否则直接人工审核
+             //图片安全检测
+             $imgCheck = $this->imgSecCheck($file,$fileTempName);
+             if($imgCheck['errmsg'] !='ok') {
+                 return $imgCheck;
+             }
         }
-
         // 获取上传文件的文件名全名（带扩展名，如 abc.png）
         $fileName = $file->getClientOriginalName();
 
