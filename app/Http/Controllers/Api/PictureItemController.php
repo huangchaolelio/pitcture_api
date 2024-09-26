@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Picture;
 use App\Models\PictureItem;
 use App\Models\Users;
+use Illuminate\Support\Facades\DB;
 
 class PictureItemController extends Controller
 {
@@ -92,12 +93,20 @@ class PictureItemController extends Controller
     // 图片列表
     public function itemlist()
     {
-        $itemlists = PictureItem::inRandomOrder()->take(50)->get();
-
-        foreach($itemlists as $itemlist)
-        {
-            $itemlist['image'] = $itemlist->url;
-        }
+//        $itemlists = PictureItem::inRandomOrder()->take(50)->get();
+//
+//        foreach($itemlists as $itemlist)
+//        {
+//            $itemlist['image'] = $itemlist->url;
+//        }
+        $res = DB::table('picture_item')
+            ->join('picture','picture_item.picture_id', '=', 'picture.id')
+            ->select('picture_item.*',DB::raw('picture_item.url as image'))
+            ->where('picture.is_show', '=', 1)
+            ->where('picture_item.is_show', '=', 1)
+            ->whereIn('picture.pic_category_id', ['16','21'])
+            ->inRandomOrder()->take(20)->get();
+        $itemlists = json_decode(json_encode($res), true);
         return $itemlists;
     }
 
