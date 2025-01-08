@@ -63,7 +63,14 @@ class AdminController extends Controller
     // 管理后台
     public function index(Request $request)
     {
-        return view('admin.index');
+//        return view('admin.index');
+        $username = $request->session()->get('username');
+        if($username=='admin') {
+            return view('admin.index');
+        } else {
+            logger($username);
+            return view('admin.pic_order');
+        }
     }
 
     // 后台首页
