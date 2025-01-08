@@ -98,7 +98,7 @@
                   <td>{{date('Y-m-d H:i', $picture->updated_time)}}</td>
                   <td>
                     <div class="btn-group btn-group-sm">
-                      <a class="btn btn-default" href="#!" data-bs-toggle="modal" data-bs-target="#myModal" title="编辑" onclick="editInfo({{$loop=>iteration}});"><i class="mdi mdi-pencil"></i></a>
+                      <a class="btn btn-default" href="#!" data-bs-toggle="modal" data-bs-target="#myModal" title="编辑" onclick="editInfo({{$loop->iteration}});"><i class="mdi mdi-pencil"></i></a>
                       <a class="btn btn-default" data-bs-toggle="tooltip" title="删除" onclick="confirm_Id([{{$picture->id}}]);"><i class="mdi mdi-window-close"></i></a>
                     </div>
                   </td>
