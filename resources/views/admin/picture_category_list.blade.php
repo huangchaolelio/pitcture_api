@@ -17,18 +17,18 @@
 <link rel="stylesheet" type="text/css" href="{{asset('lightyearadmin/js/jquery-confirm/jquery-confirm.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('lightyearadmin/css/style.min.css')}}">
 </head>
-  
+
 <body>
 <div class="container-fluid">
-  
+
   <div class="row">
-    
+
     <div class="col-lg-12">
       <div class="card">
         <header class="card-header"><div class="card-title">图片分类列表</div></header>
         <div class="card-body">
           <div class="card-search mb-2-5">
-            <form class="search-form" method="get" action="#!" role="form">              
+            <form class="search-form" method="get" action="#!" role="form">
               <div class="row">
                 <div class="col-md-4">
                   <div class="row">
@@ -42,7 +42,7 @@
                   <button type="submit" class="btn btn-sm btn-primary me-1">搜索</button>
                   <button type="reset" class="btn btn-sm btn-default">重置</button>
                 </div>
-              </div>              
+              </div>
             </form>
           </div>
           <form id="category" method="post" action="">
@@ -85,7 +85,7 @@
                   <td>{{$picture->title}}</td>
                   <td>{{$picture->orders}}</td>
                   <td>
-                    <a href="{{url('admin/picture_category_show?id=' . $picture->id)}}"> 
+                    <a href="{{url('admin/picture_category_show?id=' . $picture->id)}}">
                       @if($picture->is_show == 1)
                         <span class="badge bg-success">上架</span>
                       @endif
@@ -98,7 +98,7 @@
                   <td>{{date('Y-m-d H:i', $picture->updated_time)}}</td>
                   <td>
                     <div class="btn-group btn-group-sm">
-                      <a class="btn btn-default" href="#!" data-bs-toggle="modal" data-bs-target="#myModal" title="编辑" onclick="editInfo({{$loop->iteration}});"><i class="mdi mdi-pencil"></i></a>
+                      <a class="btn btn-default" href="#!" data-bs-toggle="modal" data-bs-target="#myModal" title="编辑" onclick="editInfo({{$loop=>iteration}});"><i class="mdi mdi-pencil"></i></a>
                       <a class="btn btn-default" data-bs-toggle="tooltip" title="删除" onclick="confirm_Id([{{$picture->id}}]);"><i class="mdi mdi-window-close"></i></a>
                     </div>
                   </td>
@@ -109,19 +109,19 @@
           </div>
         </form>
           {{$pictures->links()}}
-          
+
         </div>
       </div>
     </div>
-        
+
   </div>
-  
+
 </div>
 
 <!--myModal -->
 <div class="modal fade" id="myModal">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">      
+    <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="addModalLabel">新增图片分类</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -151,9 +151,9 @@
                   <label class="form-check-label" for="xiajia">下架</label>
                 </div>
               </div>
-            </div>         
+            </div>
         </div>
-        </form> 
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-primary ajax-post sub_type" target-form="add-form" onclick="add_or_update()">提 交</button>
@@ -185,16 +185,16 @@
       type: 'post',
       dataType: 'json',
       data: formdata,
-      // headers: { 
+      // headers: {
       //     "Authorization":"Bearer " + $("#_token").val(),
       //     'Content-Type': 'application/x-www-form-urlencoded'
-      // },                
+      // },
       success: function(res){
         // alert(res.msg);
         location.reload();
       },
       error: function(e) {
-        alert(JSON.stringify(e)); 
+        alert(JSON.stringify(e));
       }
     });
   }
@@ -212,16 +212,16 @@
       type: 'post',
       dataType: 'json',
       data: formdata,
-      // headers: { 
+      // headers: {
       //     "Authorization":"Bearer " + $("#_token").val(),
       //     'Content-Type': 'application/x-www-form-urlencoded'
-      // },                
+      // },
       success: function(res){
         // alert(res.msg);
         location.reload();
       },
       error: function(e) {
-        alert(JSON.stringify(e)); 
+        alert(JSON.stringify(e));
       }
     });
   }
@@ -234,16 +234,16 @@
       type: 'post',
       dataType: 'json',
       data: formdata,
-      // headers: { 
+      // headers: {
       //     "Authorization":"Bearer " + $("#_token").val(),
       //     'Content-Type': 'application/x-www-form-urlencoded'
-      // },                
+      // },
       success: function(res){
         // alert(res.msg);
         location.reload();
       },
       error: function(e) {
-        alert(JSON.stringify(e)); 
+        alert(JSON.stringify(e));
       }
     });
   }
@@ -257,13 +257,13 @@
       data: {
         'ids': id,
         '_token': '{{csrf_token()}}'
-      },             
+      },
       success: function(res){
         // alert(res.msg);
         location.reload();
       },
       error: function(e) {
-        alert(JSON.stringify(e)); 
+        alert(JSON.stringify(e));
       }
     });
   }
@@ -284,7 +284,7 @@
                   iddel(id); // 删除指定id的分类
                 }
             },
-            '取消': function() {                          
+            '取消': function() {
             },
         }
     });
@@ -296,7 +296,7 @@
       $.alert('请选中要操作的记录');
       return;
     }
-    
+
     $.confirm({
         title: '是否确认删除',
         content: '<b>删除分类，将删除分类下的所有图辑和图片！！</b><br/>是否继续。',
@@ -312,7 +312,7 @@
                   idsdel(); // 批量删除分类
                 }
             },
-            '取消': function() {                          
+            '取消': function() {
             },
         }
     });
@@ -365,7 +365,7 @@
         content: '分类名称不能为空',
       });
       return false;
-    } 
+    }
     else if ($.trim(orders) == '') {
       $.alert({
         title: '提示',
