@@ -68,8 +68,8 @@ class AdminController extends Controller
         if($username=='admin') {
             return view('admin.index');
         } else {
-            logger($username);
-            return view('admin.pic_order');
+//            logger($username);
+            return view('admin.index_pic_order');
         }
     }
 

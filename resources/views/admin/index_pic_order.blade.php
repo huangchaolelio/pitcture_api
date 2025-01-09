@@ -39,7 +39,7 @@
                 <span>订单管理</span>
               </a>
               <ul class="nav nav-subnav">
-                <li> <a class="multitabs" href="{{url('admin/picture_category_list')}}">订单分类</a> </li>
+<!--                <li> <a class="multitabs" href="{{url('admin/picture_category_list')}}">订单分类</a> </li>-->
                 <li> <a class="multitabs" href="{{url('admin/picture_list')}}">订单辑列表</a> </li>
                 <li> <a class="multitabs" href="{{url('admin/picture_item_list')}}">订单列表</a> </li>
               </ul>

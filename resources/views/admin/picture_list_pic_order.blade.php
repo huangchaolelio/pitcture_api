@@ -39,23 +39,12 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <button type="submit" class="btn btn-sm btn-primary me-1">搜索</button>
-                  <button type="reset" class="btn btn-sm btn-default">重置</button>
-                </div>
               </div>
 
             </form>
           </div>
         <form id="piclist" method="post" action="">
           <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}" />
-          <div class="card-btns mb-2-5">
-<!--            <a class="btn btn-sm btn-primary me-1" href="#!"><i class="mdi mdi-plus"></i> 新增</a>-->
-            <a class="btn btn-sm btn-primary me-1" data-bs-toggle="modal" data-bs-target="#myModal" onclick="addInfo();"><i class="mdi mdi-plus"></i> 新增</a>
-            <a class="btn btn-sm btn-success me-1" onclick="qiyong();"><i class="mdi mdi-check"></i> 启用</a>
-            <a class="btn btn-sm btn-warning me-1" onclick="jinyong();"><i class="mdi mdi-block-helper"></i> 禁用</a>
-            <a class="btn btn-sm btn-danger" onclick="confirm_Ids();"><i class="mdi mdi-window-close"></i> 删除</a>
-          </div>
           <div class="table-responsive">
             <table class="table table-bordered">
               <thead>
@@ -73,13 +62,7 @@
                   <th>下载需积分</th>
                   <th>平台</th>
                   <th>图片分类</th>
-                  <th>图片item</th>
                   <th>图片数量</th>
-                  <th>下载次数</th>
-                  <th>收藏数量</th>
-                  <th>显示状态</th>
-                  <th>发布时间</th>
-                  <th>操作</th>
                 </tr>
               </thead>
               <tbody>
@@ -99,35 +82,15 @@
                     @if($picture->describe == null)
                       --
                     @else
-                      {{$picture->describe->describe}}
+                      {{$picture->pic_desc}}
                     @endif
                   </td>
-                  <td>{{isset($picture->user->nickname)? $picture->user->nickname : ''}}</td>
+                  <td>{{isset($picture->nickname)? $picture->nickname : ''}}</td>
                   <td>{{$picture->score}}</td>
                   <td>{{$picture->device_type}}</td>
-                  <td>{{isset($picture->picCategory->title)? $picture->picCategory->title : ''}}</td>
-                  <td><img src="{{$picture->item !=null ? $picture->item->url : '#'}}" style="width: 100px;"></td>
+                  <td>{{isset($picture->category_title)? $picture-> category_title : ''}}</td>
                   <td>{{$picture->item_count}}</td>
-                  <td>{{$picture->download}}</td>
-                  <td>{{$picture->collect}}</td>
-                  <td>
-                    <a href="{{url('admin/picture_show?picid=' . $picture->id)}}">
-                      @if($picture->is_show == 1)
-                        <span class="badge bg-success">上架</span>
-                      @endif
-                      @if($picture->is_show == 0)
-                        <span class="badge bg-secondary">待审核</span>
-                      @endif
-                    </a>
-                  </td>
-                  <td>{{date('Y-m-d H:i', $picture->updated_time)}}</td>
-                  <td>
-                    <div class="btn-group btn-group-sm">
-<!--                      <a class="btn btn-default" href="#!" data-bs-toggle="tooltip" title="编辑" data-url="{{url('admin/edit_picture?id=' . $picture->id)}}" ><i class="mdi mdi-pencil"></i></a>-->
-                        <a href="#!" class="btn btn-default js-create-tab" data-bs-toggle="tooltip" title="编辑图辑" data-title="编辑" data-url="{{url('admin/edit_picture?id=' . $picture->id)}}"><i class="mdi mdi-pencil"></i></a>
-                      <a class="btn btn-default" data-bs-toggle="tooltip" title="删除" onclick="confirm_Id([{{$picture->id}}])"><i class="mdi mdi-window-close"></i></a>
-                    </div>
-                  </td>
+
                 </tr>
                 @endforeach
               </tbody>

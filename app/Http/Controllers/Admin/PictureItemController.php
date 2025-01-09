@@ -10,28 +10,45 @@ use App\Models\Picture;
 use App\Models\PictureItem;
 use App\Models\OssConfig;
 use App\Models\Users;
+use Illuminate\Support\Facades\DB;
 
 class PictureItemController extends Controller
 {
     // 图片列表
-    public function picture_item_list()
+    public function picture_item_list(Request $request)
     {
-        $pictureitems = PictureItem::orderByDesc('created_time')->paginate(15);
-        Paginator::useBootstrapFive();
-        // Paginator::useBootstrapFour();
+        $username = $request->session()->get('username');
+        if($username=='admin') {
+            $pictureitems = PictureItem::orderByDesc('created_time')->paginate(15);
+            Paginator::useBootstrapFive();
+            // Paginator::useBootstrapFour();
 
-        foreach($pictureitems as $pictureitem)
-        {
-            // 获得图辑的信息
-            $pictureitem['picture'] =Picture::where('id', $pictureitem->picture_id)->first();
+            foreach($pictureitems as $pictureitem)
+            {
+                // 获得图辑的信息
+                $pictureitem['picture'] =Picture::where('id', $pictureitem->picture_id)->first();
 
-            // 获得会员的信息
-            $pictureitem['user'] = Users::find($pictureitem->picture->user_id);
+                // 获得会员的信息
+                $pictureitem['user'] = Users::find($pictureitem->picture->user_id);
+            }
+            return view('admin.picture_item_list',array(
+                'pictureitems' => $pictureitems
+            ));
+        } else {
+//            只查登录用户的
+            $pictureitems = DB::table('picture_item')
+                ->join('picture', 'picture.id', '=', 'picture_item.picture_id')
+                ->join('users','picture.user_id', '=', 'users.id')
+                ->select('picture_item.*', 'picture.title as picture_title', 'users.nickname','users.avatar_url')
+                ->where('users.mobile', '=', $username)
+                ->orderBy('picture_item.created_time', 'DESC') // 按照picture_item表的created_at字段降序排序
+                ->paginate(15);
+            Paginator::useBootstrapFive();
+            return view('admin.picture_item_list_pic_order',array(
+                'pictureitems' => $pictureitems
+            ));
         }
 
-        return view('admin.picture_item_list',array(
-            'pictureitems' => $pictureitems
-        ));
     }
 
     // 图片搜索

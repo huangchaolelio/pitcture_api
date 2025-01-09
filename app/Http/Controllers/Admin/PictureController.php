@@ -12,32 +12,53 @@ use App\Models\OssConfig;
 use App\Models\PictureCategory;
 use App\Models\PictureDescribe;
 use App\Models\Users;
+use Illuminate\Support\Facades\DB;
 
 class PictureController extends Controller
 {
     // 图辑列表
-    public function picture_list()
+    public function picture_list(Request $request)
     {
-        $pictures = Picture::orderBy('created_time', 'desc')->paginate(15);
-        Paginator::useBootstrapFive();
+        $username = $request->session()->get('username');
+        if($username=='admin') {
+            $pictures = Picture::orderBy('created_time', 'desc')->paginate(15);
+            Paginator::useBootstrapFive();
 
-        foreach($pictures as $picture)
-        {
-            // 对应分类
-            $picture['picCategory'] = PictureCategory::where('id', $picture->pic_category_id)->first();
+            foreach($pictures as $picture)
+            {
+                // 对应分类
+                $picture['picCategory'] = PictureCategory::where('id', $picture->pic_category_id)->first();
 
-            // 对应的描述
-            $picture['describe'] = PictureDescribe::where('picture_id', $picture->id)->first();
+                // 对应的描述
+                $picture['describe'] = PictureDescribe::where('picture_id', $picture->id)->first();
 
-            // 对应用户
-            $picture['user'] = Users::where('id', $picture->user_id)->first();
+                // 对应用户
+                $picture['user'] = Users::where('id', $picture->user_id)->first();
 
-            $picture['item'] = PictureItem::where('picture_id', $picture->id)->first();
+                $picture['item'] = PictureItem::where('picture_id', $picture->id)->first();
+            }
+
+            return view('admin.picture_list', array(
+                'pictures' => $pictures
+            ));
+        } else{
+//            $pictures = Picture::orderBy('created_time', 'desc')->paginate(15);
+            DB::enableQueryLog();
+            $pictures = DB::table('picture')
+//                ->join('picture_item', 'picture.id', '=', 'picture_item.picture_id')
+                ->join('users', 'picture.user_id', '=', 'users.id')
+                ->join('picture_category', 'picture.pic_category_id', '=', 'picture_category.id')
+                ->join('picture_describe', 'picture.id', '=', 'picture_describe.picture_id')
+                ->select('picture.*','picture_category.title as category_title'
+                    ,'picture_describe.describe as pic_desc','users.nickname')
+                ->where('users.mobile', '=', $username)
+                ->orderBy('picture.created_time', 'DESC')
+                ->paginate(15);
+            Paginator::useBootstrapFive();
+            return view('admin.picture_list_pic_order', array(
+                'pictures' => $pictures
+            ));
         }
-
-        return view('admin.picture_list', array(
-            'pictures' => $pictures
-        ));
     }
 
     // 审核是否显示图辑（显示或隐藏）

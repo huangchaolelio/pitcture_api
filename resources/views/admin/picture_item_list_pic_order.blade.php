@@ -25,20 +25,20 @@
 
     <div class="col-lg-12">
       <div class="card">
-        <header class="card-header"><div class="card-title">图片列表test</div></header>
+        <header class="card-header"><div class="card-title">图片列表</div></header>
         <div class="card-body">
           <div class="card-search mb-2-5">
             <form id="search" class="search-form" method="get" action="" role="form">
               <div class="row">
                 <div class="col-md-4">
                   <div class="row">
-                    <label class="col-sm-4 col-form-label"><span class="text-danger">*</span> 图片分类id</label>
+                    <label class="col-sm-4 col-form-label"><span class="text-danger">*</span> 订单分类id</label>
                     <div class="col-sm-8">
                       <input id="pic_cat_id" type="text" class="form-control pull-left" name="pic_cat_id" value="" placeholder="请输入图片分类id名称" />
                     </div>
                   </div>
                     <div class="row">
-                        <label class="col-sm-4 col-form-label"><span class="text-danger">*</span>图辑id名称</label>
+                        <label class="col-sm-4 col-form-label"><span class="text-danger">*</span>订单id名称</label>
                         <div class="col-sm-8">
                             <input id="picture_id" type="text" class="form-control pull-left" name="picture_id" value="" placeholder="请输入图辑名称" />
                         </div>
@@ -55,11 +55,6 @@
 
           <form id="picitem" method="post" action="">
             <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}" />
-          <div class="card-btns mb-2-5">
-            <a class="btn btn-sm btn-success me-1" onclick="qiyong();"><i class="mdi mdi-check"></i> 启用</a>
-            <a class="btn btn-sm btn-warning me-1" onclick="jinyong();"><i class="mdi mdi-block-helper"></i> 禁用</a>
-            <a class="btn btn-sm btn-danger" onclick="confirm_Ids();"><i class="mdi mdi-window-close"></i> 删除</a>
-          </div>
           <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover">
               <thead>
@@ -75,12 +70,8 @@
                   <th>会员</th>
                   <th>图辑(标题)</th>
                   <th>图片</th>
-                  <th>下载次数</th>
-                  <th>收藏次数</th>
-                  <th>是否上架</th>
-                  <th>oss_tag</th>
                   <th>创建时间</th>
-                  <th>操作</th>
+                    <th>订单识别</th>
                     <th>一键下单</th>
                 </tr>
               </thead>
@@ -94,34 +85,15 @@
                     </div>
                   </td>
                   <td>{{$pictureitem->id}}</td>
-                  <td><img class="rounded" style="width:60px;height:60px;" src="{{$pictureitem->user->avatar_url}}"></td>
-                  <td>{{$pictureitem->user->nickname}}</td>
-                  <td>{{$pictureitem->picture->title}}</td>
+                  <td><img class="rounded" style="width:60px;height:60px;" src="{{$pictureitem->avatar_url}}"></td>
+                  <td>{{$pictureitem->nickname}}</td>
+                  <td>{{$pictureitem->picture_title}}</td>
                   <td><img src="{{$pictureitem->url}}" style="width: 100px;"></td>
-                  <td>{{$pictureitem->download}}</td>
-                  <td>{{$pictureitem->collect}}</td>
-                  <td>
-                    <a href="{{url('admin/picitem_show?itemid=' . $pictureitem->id)}}">
-                      @if($pictureitem->is_show == 1)
-                        <span class="badge bg-success">上架</span>
-                      @endif
-                      @if($pictureitem->is_show == 0)
-                        <span class="badge bg-secondary">待审核</span>
-                      @endif
-                    </a>
-                  </td>
-                  <td>{{$pictureitem->oss_tag}}</td>
                   <td>{{date('Y-m-d H:i', $pictureitem->created_time)}}</td>
-                  <td>
-                    <div class="btn-group btn-group-sm">
-                      <!--<a class="btn btn-default" href="#!" data-bs-toggle="tooltip" title="编辑"><i class="mdi mdi-pencil"></i></a>-->
-                      <a href="#!" class="btn btn-default js-create-tab" data-bs-toggle="tooltip" title="编辑图辑" data-title="编辑" data-url="{{url('admin/edit_picture_item?itemid=' . $pictureitem->id)}}"><i class="mdi mdi-pencil"></i></a>
-                      <a class="btn btn-default" data-bs-toggle="tooltip" title="删除" onclick="confirm_Id([{{$pictureitem->id}}])"><i class="mdi mdi-window-close"></i></a>
-                    </div>
-                  </td>
+                  <td><a>订单识别</a></td>
                     <td>
 <!--                        <button onclick="exeute_auto_shop({{$pictureitem->url}},{{app('request')->session()->get('username')}})">执行下单</button>-->
-                        <a href="{{'http://localhost:5000/shop_xianyu_order?order_number=' . $pictureitem->url.'&account_id='. app('request')->session()->get('username')}}"  target="_blank">执行下单</a>
+                        <a href="{{'http://47.113.204.229/shop_xianyu_order?order_number=' . $pictureitem->id.'&account_id='. app('request')->session()->get('username')}}"  target="_blank">执行下单</a>
                     </td>
                 </tr>
                 @endforeach
@@ -164,12 +136,6 @@
       //         alert(JSON.stringify(e));
       //     }
       // });
-  }
-
-  function exeute_auto_shop(url,account){
-      console.log(account)
-      console.log(url)
-      window.open("https://www.baidu.com/");
   }
 
   function qiyong(){
