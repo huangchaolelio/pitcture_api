@@ -39,7 +39,10 @@ class PictureItemController extends Controller
             $pictureitems = DB::table('picture_item')
                 ->join('picture', 'picture.id', '=', 'picture_item.picture_id')
                 ->join('users','picture.user_id', '=', 'users.id')
-                ->select('picture_item.*', 'picture.title as picture_title', 'users.nickname','users.avatar_url')
+                ->leftJoin('picture_item_to_text','picture_item_to_text.item_id', '=', 'picture_item.id')
+                ->select('picture_item.*', 'picture.title as picture_title', 'users.nickname','users.avatar_url'
+                                  ,'picture_item_to_text.text_json'
+                )
                 ->where('users.mobile', '=', $username)
                 ->orderBy('picture_item.created_time', 'DESC') // 按照picture_item表的created_at字段降序排序
                 ->paginate(15);

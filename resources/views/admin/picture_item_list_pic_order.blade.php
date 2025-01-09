@@ -77,6 +77,10 @@
               </thead>
               <tbody>
                 @foreach($pictureitems as $pictureitem)
+                    @php
+                    // 使用json_decode函数将JSON字符串转换为PHP数据结构，这里设置为关联数组形式，方便后续操作
+                    $data = json_decode($pictureitem->text_json, true);
+                    @endphp
                 <tr>
                   <td>
                     <div class="form-check">
@@ -90,7 +94,26 @@
                   <td>{{$pictureitem->picture_title}}</td>
                   <td><img src="{{$pictureitem->url}}" style="width: 100px;"></td>
                   <td>{{date('Y-m-d H:i', $pictureitem->created_time)}}</td>
-                  <td><a>订单识别</a></td>
+                  <td>
+                  @if ($data!== null)
+                      <div>订单信息</div>
+                          <p>配送方式：{{ $data['配送方式'] }}</p>
+                          <p>地址：{{ $data['地址'] }}</p>
+                          <p>城市：{{ $data['城市'] }}</p>
+                          <p>地区：{{ $data['地区'] }}</p>
+                          <p>联系电话：{{ $data['联系电话'] }}</p>
+                          <p>收餐人：{{ $data['收餐人'] }}</p>
+                          <p>门店：{{ $data['门店'] }}</p>
+                      <div>商品详情</div>
+                      <ul>
+                          @foreach ($data['商品'] as $item)
+                          <li>
+                              商品名称：{{ $item['商品名称'] }}，价格：{{ $item['价格'] }}，数量：{{ $item['数量'] }}
+                          </li>
+                          @endforeach
+                      </ul>
+                  @endif
+                  </td>
                     <td>
 <!--                        <button onclick="exeute_auto_shop({{$pictureitem->url}},{{app('request')->session()->get('username')}})">执行下单</button>-->
                         <a href="{{'http://47.113.204.229/shop_xianyu_order?order_number=' . $pictureitem->id.'&account_id='. app('request')->session()->get('username')}}"  target="_blank">执行下单</a>
