@@ -16,6 +16,14 @@
 <!--对话框插件css-->
 <link rel="stylesheet" type="text/css" href="{{asset('lightyearadmin/js/jquery-confirm/jquery-confirm.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('lightyearadmin/css/style.min.css')}}">
+<style>
+    img {
+        transition: all 0.3s ease;
+    }
+    .zoomed {
+        transform: scale(2); /* 放大2倍，可根据需求调整倍数 */
+    }
+</style>
 </head>
 
 <body>
@@ -92,7 +100,7 @@
                   <td><img class="rounded" style="width:60px;height:60px;" src="{{$pictureitem->avatar_url}}"></td>
                   <td>{{$pictureitem->nickname}}</td>
                   <td>{{$pictureitem->picture_title}}</td>
-                  <td><img src="{{$pictureitem->url}}" style="width: 100px;"></td>
+                  <td><img src="{{$pictureitem->url}}" width="240" id="ord_pic" onclick="zoomImage()"></td>
                   <td>{{date('Y-m-d H:i', $pictureitem->created_time)}}</td>
                   <td>
                   @if ($data!== null)
@@ -159,6 +167,17 @@
       //         alert(JSON.stringify(e));
       //     }
       // });
+  }
+
+  let isZoomed = false;
+  function zoomImage() {
+      var image = document.getElementById('ord_pic');
+      // 判断图片元素是否已经包含zoomed类
+      if (image.classList.contains('zoomed')) {
+          image.classList.remove('zoomed');
+      } else {
+          image.classList.add('zoomed');
+      }
   }
 
   function qiyong(){
